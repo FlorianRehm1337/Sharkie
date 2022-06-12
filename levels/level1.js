@@ -5,6 +5,12 @@ const level1 = new Level(
         new Pufferfish_Red(),
     ],
     [
+        new JellyFish_Yellow(500),
+        new JellyFish_Pink(750),
+        new JellyFish_Purple(1000),
+        new JellyFish_Green(1250),
+    ],
+    [
         new Endboss(),
     ], 
     [

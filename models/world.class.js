@@ -40,8 +40,8 @@ class World {
 
     checkCollisions() {
 
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+        this.level.jellyfishes.forEach((jellyfish) => {
+            if (this.character.isColliding(jellyfish)) {
 
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
@@ -74,7 +74,8 @@ class World {
         this.addToMap(this.character)
 
         this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.pufferfishes);
+        this.addObjectsToMap(this.level.jellyfishes);
         this.addObjectsToMap(this.level.endboss);
 
         this.ctx.translate(-this.camera_x, 0); //Back

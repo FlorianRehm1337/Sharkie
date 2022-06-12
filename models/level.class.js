@@ -1,12 +1,14 @@
 class Level{
-    enemies;
+    pufferfishes;
+    jellyfishes;
     endboss;
     lights;
     backgroundObjects;
     level_end_x = 1400;
     
-    constructor(enemies,endboss, lights, backgroundObjects){
-        this.enemies = enemies;
+    constructor(pufferfishes,jellyfishes,endboss, lights, backgroundObjects){
+        this.pufferfishes = pufferfishes;
+        this.jellyfishes = jellyfishes;
         this.endboss = endboss
         this.lights = lights;
         this.backgroundObjects = backgroundObjects;

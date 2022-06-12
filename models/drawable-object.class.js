@@ -43,6 +43,10 @@ class DrawableObject{
             this instanceof Endboss ||
             this instanceof Pufferfish_Green ||
             this instanceof Pufferfish_Orange ||
-            this instanceof Pufferfish_Red
+            this instanceof Pufferfish_Red ||
+            this instanceof JellyFish_Green ||
+            this instanceof JellyFish_Pink ||
+            this instanceof JellyFish_Yellow ||
+            this instanceof JellyFish_Purple 
     }
 }
