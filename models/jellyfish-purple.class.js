@@ -1,7 +1,13 @@
 class JellyFish_Purple extends MovableObject{
     
     width = 100;
-    height = 75;
+    height = 100;
+    offset = {
+        x: 10,
+        y: 10,
+        width: 25,
+        height: 25,
+    }
 
     IMAGES = [
         'img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',

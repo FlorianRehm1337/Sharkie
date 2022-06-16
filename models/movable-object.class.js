@@ -4,12 +4,22 @@ class MovableObject extends DrawableObject {
     otherDirection = false;
     energy = 100;
     lastHit = 0;
+    isTimePassed = false;
+    spawnTime = new Date().getTime();
+
+    offset = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    }
+
 
     isColliding(mo) {
-        return this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+        return this.x + this.width - this.offset.width > mo.x + mo.offset.x &&
+            this.y + this.height - this.offset.height > mo.y + mo.offset.y &&
+            this.x + this.offset.x < mo.x + mo.width - this.offset.width &&
+            this.y + this.offset.y < mo.y + mo.height - this.offset.height
     }
 
     hit() {
@@ -38,16 +48,6 @@ class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    moveRight() {
-        console.log('moveing right')
-    }
-
-    moveLeft() {
-        setInterval(() => {
-            this.x -= this.speed;
-        }, 1000 / 60)
-    }
-
     swimVerticalDown(height) {
 
         let swimDown = setInterval(() => {
@@ -58,7 +58,6 @@ class MovableObject extends DrawableObject {
             }
 
             if (this.y < 0) { //wenn y kleiner als 0 ist (er schwimmt oben raus) ,dann schwimm runter
-                console.log(this.y, 'fish schwimmt runter')
                 clearInterval(swimDown)
                 this.swimVerticalUp(height);
             }
@@ -74,10 +73,49 @@ class MovableObject extends DrawableObject {
                 this.y += 2;
             }
             if (this.y + this.height > 480) { //wenn y größer ist als 400 (er schwimmt unten raus), dann schwimm hoch
-                console.log(this.y, 'fish schwimmt hoch')
                 clearInterval(swimUp)
                 this.swimVerticalDown(height);
             }
         }, 1000 / 60);
     }
+
+    swimLeft() {
+        this.otherDirection = true;
+        let swimLeft = setInterval(() => {
+            this.x += this.speed;
+            if (!this.isTimePassed) {
+                clearInterval(swimLeft)
+                this.swimRight();
+            }
+
+
+        }, 1000 / 60);
+    }
+
+    swimRight() {
+        this.otherDirection = false;
+        let swimRight = setInterval(() => {
+            this.x -= this.speed;
+            if (this.isTimePassed) {
+                clearInterval(swimRight)
+                this.swimLeft();
+            }
+        }, 1000 / 60);
+    }
+
+    checkTime() {
+        setInterval(() => {
+            let spawnTimePassed = new Date().getTime() - this.spawnTime;
+            spawnTimePassed = spawnTimePassed / 1000;
+            if (spawnTimePassed >= 5) {
+                this.spawnTime = new Date().getTime();
+                if(this.isTimePassed == false){
+                    this.isTimePassed = true;
+                } else if(this.isTimePassed == true){
+                    this.isTimePassed = false;
+                }
+            }
+        }, 100);
+    }
+
 }

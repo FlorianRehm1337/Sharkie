@@ -2,6 +2,12 @@ class JellyFish_Pink extends MovableObject{
     
     width = 125;
     height = 125;
+    offset = {
+        x: 10,
+        y: 10,
+        width: 25,
+        height: 25,
+    }
 
     IMAGES = [
         'img/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png',
@@ -15,7 +21,7 @@ class JellyFish_Pink extends MovableObject{
         this.loadImages(this.IMAGES);
         this.y = Math.random() * ((450 - this.height) - 20 + 20);
         this.x = x;
-        this.swimVerticalDown(this.height);
+        //this.swimVerticalDown(this.height);
         this.animate();
     }
 

@@ -6,7 +6,7 @@ class DrawableObject{
     y = 250;
     height = 100;
     width = 150;
-
+    
 
     loadImage(path) {
         this.img = new Image(); //same like this.img = document.getElementById('image') <img id="image">
@@ -32,10 +32,18 @@ class DrawableObject{
         if (this.checkInstances()) {
             ctx.beginPath();
             ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.strokeStyle = 'red';
+            ctx.rect(this.x + this.offset.x, this.y + this.offset.y, this.width - this.offset.width, this.height - this.offset.height);
             ctx.stroke();
         }
+
+       /*  if (this.checkInstances()) {
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = 'blue';
+            ctx.rect(this.x, this.y, this.width , this.height );
+            ctx.stroke();
+        } */
     }
 
     checkInstances() {
