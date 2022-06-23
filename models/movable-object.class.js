@@ -16,10 +16,57 @@ class MovableObject extends DrawableObject {
 
 
     isColliding(mo) {
-        return this.x + this.width - this.offset.width > mo.x + mo.offset.x &&
-            this.y + this.height - this.offset.height > mo.y + mo.offset.y &&
-            this.x + this.offset.x < mo.x + mo.width - this.offset.width &&
-            this.y + this.offset.y < mo.y + mo.height - this.offset.height
+        return this.isHorizontalIntersection(mo) && this.isVerticalIntersection(mo);
+        
+        
+        
+        
+        
+        
+        /* !(mo.y + mo.offset.y > this.y + this.height - this.offset.height + this.offset.y ||
+            mo.y + mo.height - mo.offset.height + mo.offset.y < this.y + this.offset.y) &&
+            !(mo.x + mo.offset.x > this.x + this.width - this.offset.width + this.offset.x ||
+                mo.x + mo.width - mo.offset.width + mo.offset.x < this.x + this.offset.x) */
+    }
+
+    isHorizontalIntersection(mo){
+        return !(this.isLeftSide(mo) || this.isRightSide(mo));
+    }
+
+    isVerticalIntersection(mo){
+        return !(this.isAbove() || this.isBelow(mo));
+    }
+
+    isAbove(mo){
+        return !(this.getHitBoxBottomPos() > mo.getHitBoxTopPos());
+    }
+
+    isBelow(mo){
+        return !(this.getHitBoxTopPos() < mo.getHitBoxBottomPos());
+    }
+
+    isLeftSide(mo){
+        return !(this.getHitBoxRightPos() > mo.getHitBoxLeftPos());
+    }
+
+    isRightSide(mo){
+        return !(this.getHitBoxLeftPos() > mo.getHitBoxRightPos());
+    }
+
+    getHitBoxRightPos(){
+        return this.x + this.width - this.offset.width;
+    }
+
+    getHitBoxLeftPos(){
+        return this.x + this.offset.x;
+    }
+
+    getHitBoxTopPos(){
+        return this.y + this.offset.y;
+    }
+
+    getHitBoxBottomPos(){
+        return this.y + this.height - this.offset.height;
     }
 
     hit() {
@@ -109,9 +156,9 @@ class MovableObject extends DrawableObject {
             spawnTimePassed = spawnTimePassed / 1000;
             if (spawnTimePassed >= 5) {
                 this.spawnTime = new Date().getTime();
-                if(this.isTimePassed == false){
+                if (this.isTimePassed == false) {
                     this.isTimePassed = true;
-                } else if(this.isTimePassed == true){
+                } else if (this.isTimePassed == true) {
                     this.isTimePassed = false;
                 }
             }

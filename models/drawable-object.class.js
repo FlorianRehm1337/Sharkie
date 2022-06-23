@@ -33,17 +33,17 @@ class DrawableObject{
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'red';
-            ctx.rect(this.x + this.offset.x, this.y + this.offset.y, this.width - this.offset.width, this.height - this.offset.height);
+            ctx.rect(this.x + this.offset.x, this.y + this.offset.y,(this.x + this.width - this.offset.width) - (this.x + this.offset.x),(this.y + this.height - this.offset.height) - (this.y + this.offset.y));
             ctx.stroke();
         }
 
-       /*  if (this.checkInstances()) {
+         if (this.checkInstances()) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
             ctx.rect(this.x, this.y, this.width , this.height );
             ctx.stroke();
-        } */
+        }  
     }
 
     checkInstances() {

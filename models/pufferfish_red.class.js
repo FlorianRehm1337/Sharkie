@@ -33,7 +33,7 @@ class Pufferfish_Red extends MovableObject {
         this.x = 1000 + Math.random() * 120;
         this.y = Math.random() * ((450 - this.height) - 20 + 20);
         this.checkTime();
-        //sthis.swimLeft();
+        //this.swimLeft();
         this.animate();
 
     }

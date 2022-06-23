@@ -40,52 +40,48 @@ class World {
 
     checkCollisions() {
 
-        this.level.jellyfishes.forEach((jellyfish) => {
-            if (this.character.isColliding(jellyfish)) {
-
-                this.character.hit();
-                this.healthbar.setPercentage(this.character.energy)
-                console.log('colliding', this.character.energy);
-            };
-
-        })
-
-        this.level.endboss.forEach((endboss) => {
-            if (this.character.isColliding(endboss)) {
-                console.log('colliding with boss')
-            }
-        })
-
+        this.characterIsCollidingJellyfish();
+        this.characterIsCollidingPufferfish();
+        this.characterIsCollidingEndboss();
     }
 
     draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) //clear Canvas
-
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.level.backgroundObjects);
-        this.addObjectsToMap(this.level.lights);
-        this.ctx.translate(-this.camera_x, 0); //Back
-        this.addToMap(this.healthbar);
-        this.addToMap(this.coinbar);
-        this.addToMap(this.poisonbar);
-        this.ctx.translate(this.camera_x, 0); //Forwards
-
+        this.drawLevelObjects(); 
         this.addToMap(this.character)
-
-        this.addObjectsToMap(this.throwableObjects);
-        this.addObjectsToMap(this.level.pufferfishes);
-        this.addObjectsToMap(this.level.jellyfishes);
-        this.addObjectsToMap(this.level.endboss);
-
         this.ctx.translate(-this.camera_x, 0); //Back
-
+        this.drawStatusbars();
+        this.ctx.translate(this.camera_x, 0); //Forwards
+        this.addObjectsToMap(this.throwableObjects);
+        this.ctx.translate(-this.camera_x, 0); //Back
 
         // Draw() wird immer wieder aufgerufen
+        this.startAnimationFrame()
+       
+    }
+
+    startAnimationFrame(){
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
-        }); //wird so oft aufgerufen wie die Grafikkarte kann
+        }); 
+    }
+
+    drawLevelObjects(){
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.lights);
+        this.addObjectsToMap(this.level.pufferfishes);
+        this.addObjectsToMap(this.level.jellyfishes);
+        this.addObjectsToMap(this.level.endboss);
+        this.addObjectsToMap(this.level.coins);
+    }
+
+    drawStatusbars(){
+        this.addToMap(this.healthbar);
+        this.addToMap(this.coinbar);
+        this.addToMap(this.poisonbar);
     }
 
     addToMap(mo) {
@@ -116,5 +112,39 @@ class World {
     flipImageBack(mo) {
         mo.x = mo.x * -1
         this.ctx.restore();
+    }
+
+    characterIsCollidingJellyfish(){
+        this.level.jellyfishes.forEach((jellyfish) => {
+            if (this.character.isColliding(jellyfish)) {
+
+                this.character.hit();
+                this.healthbar.setPercentage(this.character.energy)
+                console.log('colliding', this.character.energy);
+            };
+
+        })
+    }
+
+    characterIsCollidingPufferfish(){
+        this.level.pufferfishes.forEach((pufferfish) => {
+            if (this.character.isColliding(pufferfish)) {
+
+                this.character.hit();
+                this.healthbar.setPercentage(this.character.energy)
+                console.log('colliding', this.character.energy);
+            };
+
+        })
+    }
+
+    characterIsCollidingEndboss(){
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss)) {
+                this.character.hit();
+                this.healthbar.setPercentage(this.character.energy)
+                console.log('colliding with boss')
+            }
+        })
     }
 }

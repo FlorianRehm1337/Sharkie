@@ -6,11 +6,18 @@ class Character extends MovableObject{
     x = 0;
     speed = 6;
 
-    offset = {
+    /* offset = {
         x: 45,
         y: 115,
         width: 90,
         height: 170,
+    } */
+
+    offset = {
+        x: 50,
+        y: 50,
+        width: 50,
+        height: 50,
     }
 
     IMAGES_SWIMMING = [
@@ -99,8 +106,6 @@ class Character extends MovableObject{
             this.swimming_sound.pause();
             if(this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x){
                 this.x += this.speed;
-                console.log(this.x + this.width - this.offset.width,'char')
-                console.log(this.world.level.jellyfishes[0].x - this.world.level.jellyfishes[0].offset.x, 'fish')
                 this.otherDirection = false;
                 this.swimming_sound.play();
             }

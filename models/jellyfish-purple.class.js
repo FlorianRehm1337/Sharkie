@@ -2,12 +2,20 @@ class JellyFish_Purple extends MovableObject{
     
     width = 100;
     height = 100;
-    offset = {
+    /* offset = {
         x: 10,
         y: 10,
         width: 25,
         height: 25,
+    } */
+
+    offset = {
+        x: 10,
+        y: 10,
+        width: 10,
+        height: 10,
     }
+
 
     IMAGES = [
         'img/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
@@ -22,7 +30,7 @@ class JellyFish_Purple extends MovableObject{
         this.loadImages(this.IMAGES);
         this.y = Math.random() * ((450 - this.height) - 20 + 20);
         this.x = x;
-        this.swimVerticalDown(this.height);
+        //this.swimVerticalDown(this.height);
         this.animate();
     }
 
