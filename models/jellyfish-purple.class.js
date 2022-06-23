@@ -2,13 +2,6 @@ class JellyFish_Purple extends MovableObject{
     
     width = 100;
     height = 100;
-    /* offset = {
-        x: 10,
-        y: 10,
-        width: 25,
-        height: 25,
-    } */
-
     offset = {
         x: 10,
         y: 10,

@@ -5,9 +5,11 @@ class JellyFish_Yellow extends MovableObject{
     offset = {
         x: 10,
         y: 10,
-        width: 25,
-        height: 25,
+        width: 10,
+        height: 10,
     }
+
+    
    
     IMAGES = [
         'img/2.Enemy/2 Jelly fish/Regular damage/Yellow 1.png',

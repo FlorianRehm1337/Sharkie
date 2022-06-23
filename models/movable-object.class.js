@@ -18,11 +18,6 @@ class MovableObject extends DrawableObject {
     isColliding(mo) {
         return this.isHorizontalIntersection(mo) && this.isVerticalIntersection(mo);
         
-        
-        
-        
-        
-        
         /* !(mo.y + mo.offset.y > this.y + this.height - this.offset.height + this.offset.y ||
             mo.y + mo.height - mo.offset.height + mo.offset.y < this.y + this.offset.y) &&
             !(mo.x + mo.offset.x > this.x + this.width - this.offset.width + this.offset.x ||
@@ -34,7 +29,7 @@ class MovableObject extends DrawableObject {
     }
 
     isVerticalIntersection(mo){
-        return !(this.isAbove() || this.isBelow(mo));
+        return !(this.isAbove(mo) || this.isBelow(mo));
     }
 
     isAbove(mo){
@@ -50,7 +45,7 @@ class MovableObject extends DrawableObject {
     }
 
     isRightSide(mo){
-        return !(this.getHitBoxLeftPos() > mo.getHitBoxRightPos());
+        return !(this.getHitBoxLeftPos() < mo.getHitBoxRightPos());
     }
 
     getHitBoxRightPos(){

@@ -5,8 +5,8 @@ class JellyFish_Pink extends MovableObject{
     offset = {
         x: 10,
         y: 10,
-        width: 25,
-        height: 25,
+        width: 10,
+        height: 10,
     }
 
     IMAGES = [

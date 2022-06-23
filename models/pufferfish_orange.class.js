@@ -4,10 +4,10 @@ class Pufferfish_Orange extends MovableObject{
     height = 75;
     speed = 2.5;
     offset = {
-        x: 10,
-        y: 10,
-        width: 25,
-        height: 30,
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 20,
     }
     
     IMAGES_SWIMMING = [

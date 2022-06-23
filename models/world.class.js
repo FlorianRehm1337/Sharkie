@@ -120,7 +120,7 @@ class World {
 
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
-                console.log('colliding', this.character.energy);
+                console.log('colliding Jellyfish', this.character.energy);
             };
 
         })
@@ -132,7 +132,7 @@ class World {
 
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
-                console.log('colliding', this.character.energy);
+                console.log('colliding Pufferfish', this.character.energy);
             };
 
         })
