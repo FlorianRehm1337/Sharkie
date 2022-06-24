@@ -10,7 +10,7 @@ class Coinbar extends DrawableObject{
         'img/4. Marcadores/orange/100_ copia 2.png',
     ];
 
-    percentage = 0;
+    coins = 0;
 
     constructor(){
         super();
@@ -19,26 +19,26 @@ class Coinbar extends DrawableObject{
         this.y = 0;
         this.width = 180;
         this.height = 50;
-        this.setPercentage(0);
+        this.setCollectedCoins(0);
     }
 
-    setPercentage(percentage){
-        this.percentage = percentage;
+    setCollectedCoins(coin){
+        this.coins = coin;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path]
 
     }
 
     resolveImageIndex(){
-        if(this.percentage == 100){
+        if(this.coins == 10){
             return 5
-        }else if(this.percentage > 80){
+        }else if(this.coins > 7){
             return 4
-        }else if(this.percentage > 60){
+        }else if(this.coins > 5){
             return 3
-        }else if(this.percentage > 40){
+        }else if(this.coins > 3){
             return 2
-        }else if(this.percentage > 20){
+        }else if(this.coins > 1){
             return 1
         }else {
             return 0

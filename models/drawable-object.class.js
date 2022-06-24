@@ -37,13 +37,13 @@ class DrawableObject{
             ctx.stroke();
         }
 
-         if (this.checkInstances()) {
+         /* if (this.checkInstances()) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
             ctx.rect(this.x, this.y, this.width , this.height );
             ctx.stroke();
-        }  
+        }   */
     }
 
     checkInstances() {
@@ -55,6 +55,8 @@ class DrawableObject{
             this instanceof JellyFish_Green ||
             this instanceof JellyFish_Pink ||
             this instanceof JellyFish_Yellow ||
-            this instanceof JellyFish_Purple 
+            this instanceof JellyFish_Purple ||
+            this instanceof Coin ||
+            this instanceof PoisonBottle
     }
 }

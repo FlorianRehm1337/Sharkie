@@ -10,6 +10,8 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    collectedCoins = 0;
+    collectedBottles = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -31,9 +33,9 @@ class World {
         }, 200);
     }
 
-    checkThrowObjects(){
-        if(this.keyboard.D){
-            let bottle = new ThrowableObject(this.character.x + 200, this.character.y + 130,this.character.otherDirection);
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection);
             this.throwableObjects.push(bottle);
         }
     }
@@ -43,13 +45,15 @@ class World {
         this.characterIsCollidingJellyfish();
         this.characterIsCollidingPufferfish();
         this.characterIsCollidingEndboss();
+        this.characterIsCollidingCoin();
+        this.characterIsCollidingPoisonBottle();
     }
 
     draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) //clear Canvas
         this.ctx.translate(this.camera_x, 0);
-        this.drawLevelObjects(); 
+        this.drawLevelObjects();
         this.addToMap(this.character)
         this.ctx.translate(-this.camera_x, 0); //Back
         this.drawStatusbars();
@@ -59,26 +63,27 @@ class World {
 
         // Draw() wird immer wieder aufgerufen
         this.startAnimationFrame()
-       
+
     }
 
-    startAnimationFrame(){
+    startAnimationFrame() {
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
-        }); 
+        });
     }
 
-    drawLevelObjects(){
+    drawLevelObjects() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.pufferfishes);
         this.addObjectsToMap(this.level.jellyfishes);
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.poisonbottles);
     }
 
-    drawStatusbars(){
+    drawStatusbars() {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.poisonbar);
@@ -114,7 +119,7 @@ class World {
         this.ctx.restore();
     }
 
-    characterIsCollidingJellyfish(){
+    characterIsCollidingJellyfish() {
         this.level.jellyfishes.forEach((jellyfish) => {
             if (this.character.isColliding(jellyfish)) {
 
@@ -126,7 +131,7 @@ class World {
         })
     }
 
-    characterIsCollidingPufferfish(){
+    characterIsCollidingPufferfish() {
         this.level.pufferfishes.forEach((pufferfish) => {
             if (this.character.isColliding(pufferfish)) {
 
@@ -138,7 +143,7 @@ class World {
         })
     }
 
-    characterIsCollidingEndboss(){
+    characterIsCollidingEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
@@ -147,4 +152,28 @@ class World {
             }
         })
     }
+
+    characterIsCollidingCoin() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.collectedCoins++;
+                this.level.coins.splice(index, 1);
+                this.coinbar.setCollectedCoins(this.collectedCoins)
+                console.log('colliding with coin')
+            }
+        })
+    }
+
+    characterIsCollidingPoisonBottle(){
+        this.level.poisonbottles.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle)) {
+                this.collectedBottles++;
+                this.level.poisonbottles.splice(index, 1);
+                this.poisonbar.setCollectedBottles(this.collectedBottles)
+                console.log('colliding with Bottle');
+            }
+        })
+    }
 }
+
+

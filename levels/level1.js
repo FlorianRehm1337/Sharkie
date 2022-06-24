@@ -6,9 +6,9 @@ const level1 = new Level(
     ],
     [
         new JellyFish_Yellow(500),
-        /* new JellyFish_Pink(750),
+        new JellyFish_Pink(750),
         new JellyFish_Purple(1000),
-        new JellyFish_Green(1250), */
+        new JellyFish_Green(1250),
     ],
     [
         new Endboss(),
@@ -17,7 +17,23 @@ const level1 = new Level(
         new Light(),
     ],
     [
-        new Coin(),
+        new Coin(300),
+        new Coin(450),
+        new Coin(600),
+        new Coin(750),
+        new Coin(900),
+        new Coin(1000),
+        new Coin(1200),
+        new Coin(1400),
+        new Coin(1600),
+        new Coin(1800),
+    ],
+    [
+        new PoisonBottle(300),
+        new PoisonBottle(600),
+        new PoisonBottle(900),
+        new PoisonBottle(1200),
+        new PoisonBottle(1600),
     ],
     [
         new BackgroundObject('img/3. Background/Layers/5. Water/L2.png', -720),
