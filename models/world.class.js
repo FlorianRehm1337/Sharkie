@@ -4,6 +4,7 @@ class World {
     healthbar = new Healthbar();
     coinbar = new Coinbar();
     poisonbar = new Poisonbar();
+    bonushealthbar = new BonusHealthbar();
     throwableObjects = [];
     level = level1;
     canvas;
@@ -12,6 +13,7 @@ class World {
     camera_x = 0;
     collectedCoins = 0;
     collectedBottles = 0;
+    energy = 100;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -43,10 +45,11 @@ class World {
     checkCollisions() {
 
         this.characterIsCollidingJellyfish();
-        this.characterIsCollidingPufferfish();
-        this.characterIsCollidingEndboss();
+        //this.characterIsCollidingPufferfish();
+        //this.characterIsCollidingEndboss();
         this.characterIsCollidingCoin();
         this.characterIsCollidingPoisonBottle();
+        this.characterIsCollidingLife();
     }
 
     draw() {
@@ -81,12 +84,16 @@ class World {
         this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.poisonbottles);
+        this.addObjectsToMap(this.level.lifes);
     }
 
     drawStatusbars() {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.poisonbar);
+        if(this.character.energy > 100){
+        this.addToMap(this.bonushealthbar);
+        }
     }
 
     addToMap(mo) {
@@ -122,9 +129,13 @@ class World {
     characterIsCollidingJellyfish() {
         this.level.jellyfishes.forEach((jellyfish) => {
             if (this.character.isColliding(jellyfish)) {
-
                 this.character.hit();
-                this.healthbar.setPercentage(this.character.energy)
+                if(this.character.energy > 100){
+                    this.bonushealthbar.setPercentage(this.character.energy);
+                }else{
+                    this.healthbar.setPercentage(this.character.energy);
+                }
+                
                 console.log('colliding Jellyfish', this.character.energy);
             };
 
@@ -171,6 +182,17 @@ class World {
                 this.level.poisonbottles.splice(index, 1);
                 this.poisonbar.setCollectedBottles(this.collectedBottles)
                 console.log('colliding with Bottle');
+            }
+        })
+    }
+
+    characterIsCollidingLife(){
+        this.level.lifes.forEach((life, index) => {
+            if (this.character.isColliding(life)) {
+                this.character.energy += 20;
+                this.level.lifes.splice(index, 1);
+                this.bonushealthbar.setPercentage(this.character.energy)
+                console.log('colliding with Life',this.character.energy);
             }
         })
     }
