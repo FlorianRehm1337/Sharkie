@@ -1,15 +1,15 @@
-class Endboss extends MovableObject{
+class Endboss extends MovableObject {
 
     height = 300;
     width = 300;
     y = 75;
 
-     offset = {
+    offset = {
         x: 20,
         y: 140,
         width: 20,
         height: 50,
-    } 
+    }
 
     IMAGES_SWIMMING = [
         'img/2.Enemy/3 Final Enemy/2.floating/1.png',
@@ -27,16 +27,53 @@ class Endboss extends MovableObject{
         'img/2.Enemy/3 Final Enemy/2.floating/13.png',
     ];
 
-    constructor(){
+    IMAGES_INTRODUCE = [
+        'img/2.Enemy/3 Final Enemy/1.Introduce/1.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/2.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/3.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/4.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/5.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/6.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/7.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/8.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/9.png',
+        'img/2.Enemy/3 Final Enemy/1.Introduce/10.png',
+    ];
+
+    introAlreadyPlayed = false;
+    introCounter = 0;
+
+    constructor() {
         super().loadImage('img/2.Enemy/3 Final Enemy/2.floating/1.png');
         this.loadImages(this.IMAGES_SWIMMING);
+        this.loadImages(this.IMAGES_INTRODUCE);
         this.x = 300;
         this.animate();
+        this.addIntroCounter();
+        //this.checkTime();
+        //this.swimVerticalDown(this.height)
+        //this.swimLeft();
     }
 
-    animate(){
+    animate() {
         setInterval(() => {
-            this.playAnimation(this.IMAGES_SWIMMING)
+            if (!this.currentImage == 1000) { //!this.introAlreadyPlayed
+                
+                //this.playIntro();
+            } else if(this.introAlreadyPlayed){
+                this.playAnimation(this.IMAGES_SWIMMING)
+            }  
+        }, 100);
+    }
+
+    addIntroCounter(){
+        let introInterval = setInterval(() => {
+            this.introCounter++;
+            this.playAnimation(this.IMAGES_INTRODUCE);
+            if (this.introCounter == this.IMAGES_INTRODUCE.length -1) {
+                clearInterval(introInterval);
+                this.introAlreadyPlayed = true;
+            }
         }, 100);
     }
 }

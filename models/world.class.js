@@ -2,11 +2,13 @@ class World {
 
     character = new Character();
     healthbar = new Healthbar();
+    endbossHealthbar = new EndbossHealthbar(this);
     coinbar = new Coinbar();
     poisonbar = new Poisonbar();
     bonushealthbar = new BonusHealthbar();
     throwableObjects = [];
     level = level1;
+    endboss;
     canvas;
     ctx;
     keyboard;
@@ -22,6 +24,7 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
+        this.endboss = this.level.endboss.find(e => e instanceof Endboss)
     }
 
     setWorld() {
@@ -32,6 +35,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrowObjects();
+            console.log(this.endboss.energy)
         }, 200);
     }
 
@@ -45,11 +49,12 @@ class World {
     checkCollisions() {
 
         this.characterIsCollidingJellyfish();
-        //this.characterIsCollidingPufferfish();
+        this.characterIsCollidingPufferfish();
         //this.characterIsCollidingEndboss();
         this.characterIsCollidingCoin();
         this.characterIsCollidingPoisonBottle();
         this.characterIsCollidingLife();
+        this.endbossIsCollidingBubbles();
     }
 
     draw() {
@@ -62,7 +67,9 @@ class World {
         this.drawStatusbars();
         this.ctx.translate(this.camera_x, 0); //Forwards
         this.addObjectsToMap(this.throwableObjects);
+        this.addToMap(this.endbossHealthbar)
         this.ctx.translate(-this.camera_x, 0); //Back
+        
 
         // Draw() wird immer wieder aufgerufen
         this.startAnimationFrame()
@@ -129,7 +136,11 @@ class World {
     characterIsCollidingJellyfish() {
         this.level.jellyfishes.forEach((jellyfish) => {
             if (this.character.isColliding(jellyfish)) {
+                this.character.hittedByJellyfish = true;
                 this.character.hit();
+                setTimeout(() => {
+                    this.character.hittedByJellyfish = false;
+                }, 1100);
                 if(this.character.energy > 100){
                     this.bonushealthbar.setPercentage(this.character.energy);
                 }else{
@@ -137,6 +148,7 @@ class World {
                 }
                 
                 console.log('colliding Jellyfish', this.character.energy);
+                
             };
 
         })
@@ -145,10 +157,13 @@ class World {
     characterIsCollidingPufferfish() {
         this.level.pufferfishes.forEach((pufferfish) => {
             if (this.character.isColliding(pufferfish)) {
-
+                this.character.hittedByPufferfish = true;
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
                 console.log('colliding Pufferfish', this.character.energy);
+                setTimeout(() => {
+                    this.character.hittedByJellyfish = false;
+                }, 1100);
             };
 
         })
@@ -191,10 +206,31 @@ class World {
             if (this.character.isColliding(life)) {
                 this.character.energy += 20;
                 this.level.lifes.splice(index, 1);
-                this.bonushealthbar.setPercentage(this.character.energy)
+                if(this.character.energy < 100){
+                    this.healthbar.setPercentage(this.character.energy)
+                }else{
+                    this.healthbar.setPercentage(this.character.energy)
+                    this.bonushealthbar.setPercentage(this.character.energy)
+                }
+                
                 console.log('colliding with Life',this.character.energy);
             }
         })
+    }
+
+    endbossIsCollidingBubbles(){
+        this.throwableObjects.forEach(bubble => {
+            if(this.endboss.isColliding(bubble)){
+                console.log('Enboss Collidiert mit Bubble')
+                if(this.endboss.energy <= 0){
+                    this.endboss.energy == 0;
+                } else{
+                    this.endboss.energy -= 10;
+                }
+                this.endbossHealthbar.setPercentage(this.endboss.energy);
+                
+            }
+        });
     }
 }
 

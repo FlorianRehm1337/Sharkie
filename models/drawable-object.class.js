@@ -57,6 +57,6 @@ class DrawableObject{
             this instanceof JellyFish_Yellow ||
             this instanceof JellyFish_Purple ||
             this instanceof Coin ||
-            this instanceof PoisonBottle
+            this instanceof PoisonBottle 
     }
 }
