@@ -7,7 +7,7 @@ class Level {
     poisonbottles;
     lifes;
     backgroundObjects;
-    level_end_x = 2000;
+    level_end_x = 1600;
 
     constructor(pufferfishes, jellyfishes, endboss, lights, coins,poisonbottles,lifes, backgroundObjects) {
         this.pufferfishes = pufferfishes;

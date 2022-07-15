@@ -8,13 +8,13 @@ class World {
     bonushealthbar = new BonusHealthbar();
     throwableObjects = [];
     level = level1;
-    endboss;
+    endboss = this.level.endboss.find(e => e instanceof Endboss);
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
     collectedCoins = 0;
-    collectedBottles = 0;
+    collectedBottles = 100;
     energy = 100;
 
     constructor(canvas, keyboard) {
@@ -24,26 +24,35 @@ class World {
         this.draw();
         this.setWorld();
         this.run();
-        this.endboss = this.level.endboss.find(e => e instanceof Endboss)
+        this.drawBackgroundObjects();
+
     }
 
     setWorld() {
         this.character.world = this;
+        this.endboss.world = this;
     }
 
     run() {
         setInterval(() => {
             this.checkCollisions();
-            this.checkThrowObjects();
-            console.log(this.endboss.energy)
-        }, 200);
+            //this.checkThrowObjects();
+        }, 100);
     }
 
-    checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection);
-            this.throwableObjects.push(bottle);
+    shootNormalBubble() {
+            let bubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', 'normal');
+            this.throwableObjects.push(bubble);
+    }
+
+    shootPoisonBubble(){
+        if(this.collectedBottles != 0){
+            let poisonBubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble.png', 'poison' );
+            this.throwableObjects.push(poisonBubble);
+            this.collectedBottles --;
+            this.poisonbar.setCollectedBottles(this.collectedBottles);
         }
+        
     }
 
     checkCollisions() {
@@ -55,22 +64,22 @@ class World {
         this.characterIsCollidingPoisonBottle();
         this.characterIsCollidingLife();
         this.endbossIsCollidingBubbles();
+        this.endbossIsCollidingPoisonBubbles();
     }
 
     draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) //clear Canvas
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(this.camera_x, 0);
         this.drawLevelObjects();
+        this.addToMap(this.endbossHealthbar);
         this.addToMap(this.character)
         this.ctx.translate(-this.camera_x, 0); //Back
         this.drawStatusbars();
         this.ctx.translate(this.camera_x, 0); //Forwards
         this.addObjectsToMap(this.throwableObjects);
-        this.addToMap(this.endbossHealthbar)
         this.ctx.translate(-this.camera_x, 0); //Back
-        
-
         // Draw() wird immer wieder aufgerufen
         this.startAnimationFrame()
 
@@ -83,8 +92,24 @@ class World {
         });
     }
 
+    drawBackgroundObjects() {
+        let firstBackground = 715;
+        let imageCounter = 0;
+        for (let i = -1; i < 10; i++) {
+            imageCounter++;
+            if (imageCounter == 3) {
+                imageCounter = 1;
+            }
+            this.level.backgroundObjects.push(
+                new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0,this),
+                new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
+                new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2,this),
+                new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5,this))
+                
+        }
+    }
+
     drawLevelObjects() {
-        this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.pufferfishes);
         this.addObjectsToMap(this.level.jellyfishes);
@@ -98,10 +123,11 @@ class World {
         this.addToMap(this.healthbar);
         this.addToMap(this.coinbar);
         this.addToMap(this.poisonbar);
-        if(this.character.energy > 100){
-        this.addToMap(this.bonushealthbar);
+        if (this.character.energy > 100) {
+            this.addToMap(this.bonushealthbar);
         }
     }
+
 
     addToMap(mo) {
         if (mo.otherDirection) {
@@ -135,20 +161,20 @@ class World {
 
     characterIsCollidingJellyfish() {
         this.level.jellyfishes.forEach((jellyfish) => {
-            if (this.character.isColliding(jellyfish)) {
+            if (this.character.isColliding(jellyfish) && this.character.energy != 0 && !this.character.isInvulnerable()) {
                 this.character.hittedByJellyfish = true;
                 this.character.hit();
+                console.log('colliding Jellyfish', this.character.energy);
+
                 setTimeout(() => {
                     this.character.hittedByJellyfish = false;
-                }, 1100);
-                if(this.character.energy > 100){
+                }, 900);
+
+                if (this.character.energy > 100) {
                     this.bonushealthbar.setPercentage(this.character.energy);
-                }else{
+                } else {
                     this.healthbar.setPercentage(this.character.energy);
                 }
-                
-                console.log('colliding Jellyfish', this.character.energy);
-                
             };
 
         })
@@ -156,14 +182,14 @@ class World {
 
     characterIsCollidingPufferfish() {
         this.level.pufferfishes.forEach((pufferfish) => {
-            if (this.character.isColliding(pufferfish)) {
+            if (this.character.isColliding(pufferfish) && this.character.energy != 0 && !this.character.isInvulnerable()) {
                 this.character.hittedByPufferfish = true;
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
                 console.log('colliding Pufferfish', this.character.energy);
                 setTimeout(() => {
-                    this.character.hittedByJellyfish = false;
-                }, 1100);
+                    this.character.hittedByPufferfish = false;
+                }, 900);
             };
 
         })
@@ -190,45 +216,64 @@ class World {
         })
     }
 
-    characterIsCollidingPoisonBottle(){
+    characterIsCollidingPoisonBottle() {
         this.level.poisonbottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle)) {
                 this.collectedBottles++;
                 this.level.poisonbottles.splice(index, 1);
-                this.poisonbar.setCollectedBottles(this.collectedBottles)
+                this.poisonbar.setCollectedBottles(this.collectedBottles);
                 console.log('colliding with Bottle');
             }
         })
     }
 
-    characterIsCollidingLife(){
+    characterIsCollidingLife() {
         this.level.lifes.forEach((life, index) => {
             if (this.character.isColliding(life)) {
                 this.character.energy += 20;
                 this.level.lifes.splice(index, 1);
-                if(this.character.energy < 100){
+                if (this.character.energy < 100) {
                     this.healthbar.setPercentage(this.character.energy)
-                }else{
+                } else {
                     this.healthbar.setPercentage(this.character.energy)
                     this.bonushealthbar.setPercentage(this.character.energy)
                 }
-                
-                console.log('colliding with Life',this.character.energy);
+
+                console.log('colliding with Life', this.character.energy);
             }
         })
     }
 
-    endbossIsCollidingBubbles(){
-        this.throwableObjects.forEach(bubble => {
-            if(this.endboss.isColliding(bubble)){
-                console.log('Enboss Collidiert mit Bubble')
-                if(this.endboss.energy <= 0){
-                    this.endboss.energy == 0;
-                } else{
-                    this.endboss.energy -= 10;
-                }
-                this.endbossHealthbar.setPercentage(this.endboss.energy);
+    endbossIsCollidingBubbles() {
+        this.throwableObjects.forEach((bubble, index) => {
+            if (this.endboss.isColliding(bubble) && 
+                this.throwableObjects[index].type == 'normal' && 
+                this.endboss.status == 'poisoned' &&
+                !this.throwableObjects[index].hittedEndboss) {
+                    
                 
+                if (this.endboss.energy <= 0 && !this.throwableObjects[index].hittedEndboss) {
+                    this.endboss.energy == 0;
+                    
+                } else if(!this.throwableObjects[index].hittedEndboss) {
+                    this.endboss.energy -= 50;
+                    this.throwableObjects[index].hittedEndboss = true;
+                } 
+                
+                this.endbossHealthbar.setPercentage(this.endboss.energy);
+                console.log('Endboss Collidiert mit Bubble',this.endboss.energy);
+            }
+        });
+    }
+
+    endbossIsCollidingPoisonBubbles() {
+        this.throwableObjects.forEach((bubble, index) => {
+            if (this.endboss.isColliding(bubble) && this.throwableObjects[index].type == 'poison') {
+                this.endboss.status = 'poisoned';
+                setTimeout(()=>{
+                    this.endboss.status = 'normal';
+                },1000)
+
             }
         });
     }

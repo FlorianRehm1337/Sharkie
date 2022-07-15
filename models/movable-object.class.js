@@ -6,6 +6,7 @@ class MovableObject extends DrawableObject {
     lastHit = 0;
     isTimePassed = false;
     spawnTime = new Date().getTime();
+    timepassed;
 
     offset = {
         x: 0,
@@ -65,7 +66,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 5;
+        this.energy -= 75;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -73,11 +74,21 @@ class MovableObject extends DrawableObject {
         }
     }
 
+    isInvulnerable(){
+        if(this.timepassed < 2){
+            return true;
+        } else{
+            return false;
+        }
+    }
+
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit; //Difference in ms
         timepassed = timepassed / 1000; //Difference in s
+        this.timepassed = timepassed;
         return timepassed < 1;
     }
+    
 
     isDead() {
         return this.energy == 0;
@@ -158,6 +169,30 @@ class MovableObject extends DrawableObject {
                 }
             }
         }, 100);
+    }
+
+    moveLeft(){
+        this.x -= this.speed;
+    }
+
+    moveRight(){
+        this.x += this.speed;
+    
+    }
+
+    dash(){
+        this.x += 10; 
+    }
+
+    swimUpAfterDeath() {
+        let swimUp = setInterval(() => {
+            if (this.y + this.offset.y > 60) {
+                this.y -= this.speed;
+
+            } else {
+                clearInterval(swimUp);
+            }
+        }, 1000 / 60)
     }
 
 }

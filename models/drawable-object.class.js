@@ -1,4 +1,4 @@
-class DrawableObject{
+class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
@@ -6,7 +6,7 @@ class DrawableObject{
     y = 250;
     height = 100;
     width = 150;
-    
+
 
     loadImage(path) {
         this.img = new Image(); //same like this.img = document.getElementById('image') <img id="image">
@@ -29,21 +29,21 @@ class DrawableObject{
 
     drawFrame(ctx) {
 
-        if (this.checkInstances()) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'red';
-            ctx.rect(this.x + this.offset.x, this.y + this.offset.y,(this.x + this.width - this.offset.width) - (this.x + this.offset.x),(this.y + this.height - this.offset.height) - (this.y + this.offset.y));
-            ctx.stroke();
-        }
-
-         /* if (this.checkInstances()) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(this.x, this.y, this.width , this.height );
-            ctx.stroke();
-        }   */
+        /*         if (this.checkInstances()) {
+                    ctx.beginPath();
+                    ctx.lineWidth = '5';
+                    ctx.strokeStyle = 'red';
+                    ctx.rect(this.x + this.offset.x, this.y + this.offset.y,(this.x + this.width - this.offset.width) - (this.x + this.offset.x),(this.y + this.height - this.offset.height) - (this.y + this.offset.y));
+                    ctx.stroke();
+                }
+        
+                  if (this.checkInstances()) {
+                    ctx.beginPath();
+                    ctx.lineWidth = '5';
+                    ctx.strokeStyle = 'blue';
+                    ctx.rect(this.x, this.y, this.width , this.height );
+                    ctx.stroke();
+                }  */
     }
 
     checkInstances() {
@@ -57,6 +57,8 @@ class DrawableObject{
             this instanceof JellyFish_Yellow ||
             this instanceof JellyFish_Purple ||
             this instanceof Coin ||
-            this instanceof PoisonBottle 
+            this instanceof PoisonBottle
     }
+
+    
 }

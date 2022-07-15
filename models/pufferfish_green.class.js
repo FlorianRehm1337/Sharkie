@@ -32,7 +32,7 @@ class Pufferfish_Green extends MovableObject{
         this.x = 600 + Math.random() * 120;
         this.y = Math.random() * ((450 - this.height) - 20 + 20);
         this.checkTime();
-        //this.swimLeft();
+        this.swimLeft();
         this.animate();
     }
 
@@ -40,9 +40,5 @@ class Pufferfish_Green extends MovableObject{
         setInterval(() => {
             this.playAnimation(this.IMAGES_SWIMMING)
         }, 150);
-       
-    }
-
-
-    
+    } 
 }

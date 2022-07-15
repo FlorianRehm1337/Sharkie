@@ -9,6 +9,11 @@ function init(){
 
 
 window.addEventListener('keydown', (e) => {
+
+    if(e.keyCode == 16){
+        keyboard.SHIFTL = true;
+    }
+
     if(e.keyCode == 39){
         keyboard.RIGHT = true;
     }
@@ -32,9 +37,18 @@ window.addEventListener('keydown', (e) => {
     if(e.keyCode == 68){
         keyboard.D = true;
     }
+
+    if(e.keyCode == 70){
+        keyboard.F = true;
+    }
 })
 
 window.addEventListener('keyup', (e) => {
+
+    if(e.keyCode == 16){
+        keyboard.SHIFTL = false;
+    }
+
     if(e.keyCode == 39){
         keyboard.RIGHT = false;
     }
@@ -57,5 +71,9 @@ window.addEventListener('keyup', (e) => {
 
     if(e.keyCode == 68){
         keyboard.D = false;
+    }
+
+    if(e.keyCode == 70){
+        keyboard.F = true;
     }
 })
