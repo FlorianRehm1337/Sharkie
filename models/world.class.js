@@ -16,6 +16,8 @@ class World {
     collectedCoins = 0;
     collectedBottles = 100;
     energy = 100;
+    endbossBarrierAdded = false;
+    alreadyAttacking = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -41,28 +43,29 @@ class World {
     }
 
     shootNormalBubble() {
-            let bubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', 'normal');
-            this.throwableObjects.push(bubble);
+        let bubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', 'normal');
+        this.throwableObjects.push(bubble);
     }
 
-    shootPoisonBubble(){
-        if(this.collectedBottles != 0){
-            let poisonBubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble.png', 'poison' );
+    shootPoisonBubble() {
+        if (this.collectedBottles != 0) {
+            let poisonBubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble.png', 'poison');
             this.throwableObjects.push(poisonBubble);
-            this.collectedBottles --;
+            this.collectedBottles--;
             this.poisonbar.setCollectedBottles(this.collectedBottles);
         }
-        
+
     }
 
     checkCollisions() {
 
         this.characterIsCollidingJellyfish();
         this.characterIsCollidingPufferfish();
-        //this.characterIsCollidingEndboss();
+        this.characterIsCollidingEndboss();
         this.characterIsCollidingCoin();
         this.characterIsCollidingPoisonBottle();
         this.characterIsCollidingLife();
+        this.characterIsCollidingBarrier();
         this.endbossIsCollidingBubbles();
         this.endbossIsCollidingPoisonBubbles();
     }
@@ -72,14 +75,20 @@ class World {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) //clear Canvas
         this.addObjectsToMap(this.level.backgroundObjects);
         this.ctx.translate(this.camera_x, 0);
+        this.addEndbossBarrier();
         this.drawLevelObjects();
-        this.addToMap(this.endbossHealthbar);
-        this.addToMap(this.character)
+        if (this.endboss.hadFirstContact) {
+            this.addToMap(this.endbossHealthbar);
+        }
+
         this.ctx.translate(-this.camera_x, 0); //Back
+        this.drawCharacter();
         this.drawStatusbars();
         this.ctx.translate(this.camera_x, 0); //Forwards
         this.addObjectsToMap(this.throwableObjects);
+
         this.ctx.translate(-this.camera_x, 0); //Back
+
         // Draw() wird immer wieder aufgerufen
         this.startAnimationFrame()
 
@@ -92,6 +101,20 @@ class World {
         });
     }
 
+    drawCharacter() {
+            this.ctx.translate(this.camera_x, 0); //Forwards
+            this.addToMap(this.character);
+            this.ctx.translate(-this.camera_x, 0); //Back
+    }
+
+    addEndbossBarrier() {
+        if (this.character.reachedEndboss && !this.endbossBarrierAdded) {
+            this.level.barriers.push(new Barrier('img/3. Background/Barrier/3.png', 2200, 0));
+            this.endbossBarrierAdded = true;
+        }
+        this.addObjectsToMap(this.level.barriers)
+    }
+
     drawBackgroundObjects() {
         let firstBackground = 715;
         let imageCounter = 0;
@@ -101,19 +124,23 @@ class World {
                 imageCounter = 1;
             }
             this.level.backgroundObjects.push(
-                new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0,this),
+                new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0, this),
                 new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
-                new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2,this),
-                new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5,this))
-                
+                new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2, this),
+                new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5, this))
+
         }
+            
+        
     }
 
     drawLevelObjects() {
-        this.addObjectsToMap(this.level.lights);
+        this.addObjectsToMap(this.level.lights)
         this.addObjectsToMap(this.level.pufferfishes);
         this.addObjectsToMap(this.level.jellyfishes);
-        this.addObjectsToMap(this.level.endboss);
+        if (this.endboss.hadFirstContact) {
+            this.addObjectsToMap(this.level.endboss);
+        }
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.poisonbottles);
         this.addObjectsToMap(this.level.lifes);
@@ -181,8 +208,17 @@ class World {
     }
 
     characterIsCollidingPufferfish() {
-        this.level.pufferfishes.forEach((pufferfish) => {
-            if (this.character.isColliding(pufferfish) && this.character.energy != 0 && !this.character.isInvulnerable()) {
+        this.level.pufferfishes.forEach((pufferfish,index) => {
+            if (this.character.isColliding(pufferfish) && this.keyboard.SPACE && !this.alreadyAttacking){
+                    this.alreadyAttacking = true;
+                    setTimeout(()=>{
+                        this.level.pufferfishes.splice(index,1);
+                        this.alreadyAttacking = false;
+                    },600)
+                    
+                
+            }
+            if (this.character.isColliding(pufferfish) && this.character.energy != 0 && !this.character.isInvulnerable() && !this.keyboard.SPACE) {
                 this.character.hittedByPufferfish = true;
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
@@ -244,24 +280,39 @@ class World {
         })
     }
 
+    characterIsCollidingBarrier() {
+        this.level.barriers.forEach(barrier => {
+            if (this.character.isColliding(barrier)) {
+                this.character.barrierLeft = true;
+                console.log('barrier links');
+            } else if (this.character.isColliding(barrier)) {
+                this.character.barrierRight = true;
+                console.log('barrier rechts');
+            } else {
+                this.character.barrierLeft = false;
+                this.character.barrierRight = false;
+            }
+        })
+    }
+
     endbossIsCollidingBubbles() {
         this.throwableObjects.forEach((bubble, index) => {
-            if (this.endboss.isColliding(bubble) && 
-                this.throwableObjects[index].type == 'normal' && 
+            if (this.endboss.isColliding(bubble) &&
+                this.throwableObjects[index].type == 'normal' &&
                 this.endboss.status == 'poisoned' &&
                 !this.throwableObjects[index].hittedEndboss) {
-                    
-                
+
+
                 if (this.endboss.energy <= 0 && !this.throwableObjects[index].hittedEndboss) {
                     this.endboss.energy == 0;
-                    
-                } else if(!this.throwableObjects[index].hittedEndboss) {
+
+                } else if (!this.throwableObjects[index].hittedEndboss) {
                     this.endboss.energy -= 50;
                     this.throwableObjects[index].hittedEndboss = true;
-                } 
-                
+                }
+
                 this.endbossHealthbar.setPercentage(this.endboss.energy);
-                console.log('Endboss Collidiert mit Bubble',this.endboss.energy);
+                console.log('Endboss Collidiert mit Bubble', this.endboss.energy);
             }
         });
     }
@@ -270,9 +321,9 @@ class World {
         this.throwableObjects.forEach((bubble, index) => {
             if (this.endboss.isColliding(bubble) && this.throwableObjects[index].type == 'poison') {
                 this.endboss.status = 'poisoned';
-                setTimeout(()=>{
+                setTimeout(() => {
                     this.endboss.status = 'normal';
-                },1000)
+                }, 1000)
 
             }
         });

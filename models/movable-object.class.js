@@ -66,7 +66,7 @@ class MovableObject extends DrawableObject {
     }
 
     hit() {
-        this.energy -= 75;
+        //this.energy -= 75;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -104,6 +104,9 @@ class MovableObject extends DrawableObject {
     swimVerticalDown(height) {
 
         let swimDown = setInterval(() => {
+            if(this.isDead()){
+                clearInterval(swimDown)
+            }
             if (this instanceof JellyFish_Pink || this instanceof JellyFish_Green) {
                 this.y -= 4;
             } else {
@@ -120,6 +123,9 @@ class MovableObject extends DrawableObject {
     swimVerticalUp(height) {
 
         let swimUp = setInterval(() => {
+            if(this.isDead()){
+                clearInterval(swimUp)
+            }
             if (this instanceof JellyFish_Pink || this instanceof JellyFish_Green) {
                 this.y += 4;
             } else {
@@ -140,8 +146,6 @@ class MovableObject extends DrawableObject {
                 clearInterval(swimLeft)
                 this.swimRight();
             }
-
-
         }, 1000 / 60);
     }
 

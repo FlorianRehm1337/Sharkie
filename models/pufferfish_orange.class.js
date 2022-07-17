@@ -29,21 +29,37 @@ class Pufferfish_Orange extends MovableObject{
     constructor(){
         super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/2.swim1.png');
         this.loadImages(this.IMAGES_SWIMMING);
+        this.loadImages(this.IMAGES_TRANSITION);
         this.x = 800 + Math.random() * 120;
         this.y = Math.random() * ((450 - this.height) - 20 + 20);
         this.checkTime();
-        //this.swimLeft();
+        this.swimLeft();
         this.animate();
+        this.checkTransition();
     }
 
     animate(){
         setInterval(() => {
-            let i = this.currentImage % this.IMAGES_SWIMMING.length;
-            let path = this.IMAGES_SWIMMING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
-        }, 150);
+            this.playAnimation(this.IMAGES_SWIMMING)
+        }, 100);
        
+    }
+
+    checkTransition(){
+        this.currentImage = 0;
+        if (!this.isInTransition) {
+            let transition = setInterval(() => {
+                this.loadImage(this.IMAGES_TRANSITION[4]);
+                this.offset.height = 0;
+            }, 100);
+            setTimeout(() => {
+                clearInterval(transition);
+                this.offset.height = 20;
+            }, 3000);
+            setTimeout(()=>{
+                this.checkTransition();
+            },6000)
+        }
     }
 
     

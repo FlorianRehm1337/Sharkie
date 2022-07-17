@@ -29,7 +29,7 @@ class DrawableObject {
 
     drawFrame(ctx) {
 
-        /*         if (this.checkInstances()) {
+                 /* if (this.checkInstances()) {
                     ctx.beginPath();
                     ctx.lineWidth = '5';
                     ctx.strokeStyle = 'red';
@@ -43,7 +43,7 @@ class DrawableObject {
                     ctx.strokeStyle = 'blue';
                     ctx.rect(this.x, this.y, this.width , this.height );
                     ctx.stroke();
-                }  */
+                }   */
     }
 
     checkInstances() {
@@ -57,7 +57,8 @@ class DrawableObject {
             this instanceof JellyFish_Yellow ||
             this instanceof JellyFish_Purple ||
             this instanceof Coin ||
-            this instanceof PoisonBottle
+            this instanceof PoisonBottle ||
+            this instanceof Barrier
     }
 
     

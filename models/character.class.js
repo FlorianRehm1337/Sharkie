@@ -127,6 +127,9 @@ class Character extends MovableObject {
     hittedByPufferfish = false;
     killedByJellyfish = false;
     killedByPufferfish = false;
+    reachedEndboss = false;
+    barrierLeft = false;
+    barrierRight = false;
 
     constructor() { //constructer Sachen werden beim Starten sofort ausgeführt
         super().loadImage('img/1.Sharkie/3.Swim/1.png');
@@ -147,14 +150,14 @@ class Character extends MovableObject {
 
         setInterval(() => {
             this.swimming_sound.pause();
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.barrierRight) {
                 this.world.keyboard.LEFT = false;
                 this.x += this.speed;
                 this.otherDirection = false;
                 this.swimming_sound.play();
             }
 
-            if (this.world.keyboard.LEFT && this.x > 0) {
+            if (this.world.keyboard.LEFT && this.x > 0 && !this.barrierLeft) {
                 this.world.keyboard.RIGHT = false;
                 this.x -= this.speed;
                 this.otherDirection = true;
@@ -194,7 +197,7 @@ class Character extends MovableObject {
                 this.activateSpace()
                 this.playAnimation(this.IMAGES_FINSLAP);
                 this.spaceAlreadyPressed = true;
-            } else if (this.checkMovementKeyIsPressed() && !this.world.keyboard.D) {
+            } else if (!this.world.keyboard.D && this.checkMovementKeyIsPressed()) {
                 this.playAnimation(this.IMAGES_SWIMMING);
 
             } else if (this.noKeyIsPressed() && !this.isDead()) {
@@ -322,10 +325,6 @@ class Character extends MovableObject {
             clearInterval(playDeath);
             console.log('intervall ist gestoppt');
         }, 1000)
-    }
-
-    dash() {
-
     }
 
     checkMovementKeyIsPressed() {

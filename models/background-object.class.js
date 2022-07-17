@@ -15,10 +15,10 @@ class BackgroundObject extends MovableObject{
 
     animate(){
         setInterval(() => {
-            if (keyboard.LEFT && this.world.character.x > 0) {
+            if ((keyboard.LEFT && this.world.character.x > 0) && !this.world.character.barrierLeft) {
                 this.moveRight();
                 console.log('swimleft')
-            } else if (keyboard.RIGHT && this.world.character.x < this.world.level.level_end_x) {
+            } else if ((keyboard.RIGHT && this.world.character.x < this.world.level.level_end_x) && !this.world.character.barrierRight) {
                 this.moveLeft();
                 console.log('swimright')
             }

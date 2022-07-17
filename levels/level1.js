@@ -14,7 +14,17 @@ const level1 = new Level(
         new Endboss(),
     ], 
     [
-        new Light(),
+        new Light(`img/3. Background/Layers/1. Light/2.png`,0),
+        new Light(`img/3. Background/Layers/1. Light/1.png`,720),
+        new Light(`img/3. Background/Layers/1. Light/2.png`,720*2),
+        new Light(`img/3. Background/Layers/1. Light/1.png`,720*3),
+        new Light(`img/3. Background/Layers/1. Light/2.png`,720*4),
+        new Light(`img/3. Background/Layers/1. Light/1.png`,720*5),
+        new Light(`img/3. Background/Layers/1. Light/2.png`,720*6),
+        new Light(`img/3. Background/Layers/1. Light/1.png`,720*7),
+        new Light(`img/3. Background/Layers/1. Light/2.png`,720*8),
+        new Light(`img/3. Background/Layers/1. Light/1.png`,720*9),
+        new Light(`img/3. Background/Layers/1. Light/2.png`,720*10),
     ],
     [
         new Coin(300),
@@ -43,31 +53,13 @@ const level1 = new Level(
         new Life(1500),
     ],
     [
-        /* new BackgroundObject('img/3. Background/Layers/5. Water/L2.png', -1440,0 ),
-        new BackgroundObject('img/3. Background/Layers/4.Fondo 2/L2.png', -1440, 0.5),
-        new BackgroundObject('img/3. Background/Layers/3.Fondo 1/L2.png', -1440, 0.75),
-        new BackgroundObject('img/3. Background/Layers/2. Floor/L2.png', -1440, 3),
-
-        new BackgroundObject('img/3. Background/Layers/5. Water/L2.png', -720,0 ),
-        new BackgroundObject('img/3. Background/Layers/4.Fondo 2/L2.png', -720, 0.5),
-        new BackgroundObject('img/3. Background/Layers/3.Fondo 1/L2.png', -720, 0.75),
-        new BackgroundObject('img/3. Background/Layers/2. Floor/L2.png', -720, 3),
-    
-        new BackgroundObject('img/3. Background/Layers/5. Water/L1.png', 0,0),
-        new BackgroundObject('img/3. Background/Layers/4.Fondo 2/L1.png', 0, 0.5),
-        new BackgroundObject('img/3. Background/Layers/3.Fondo 1/L1.png', 0, 0.75),
-        new BackgroundObject('img/3. Background/Layers/2. Floor/L1.png', 0, 3),
-    
-        new BackgroundObject('img/3. Background/Layers/5. Water/L2.png', 720,0),
-        new BackgroundObject('img/3. Background/Layers/4.Fondo 2/L2.png', 720, 0.5),
-        new BackgroundObject('img/3. Background/Layers/3.Fondo 1/L2.png', 720, 0.75),
-        new BackgroundObject('img/3. Background/Layers/2. Floor/L2.png', 720, 3),
-    
-        new BackgroundObject('img/3. Background/Layers/5. Water/L1.png', 720*2,0),
-        new BackgroundObject('img/3. Background/Layers/4.Fondo 2/L1.png', 720*2, 0.5),
-        new BackgroundObject('img/3. Background/Layers/3.Fondo 1/L1.png', 720*2, 0.75),
-        new BackgroundObject('img/3. Background/Layers/2. Floor/L1.png', 720*2, 3), */
+        //BackgroundObjects Array
     ],
+    [
+        //new Barrier('img/3. Background/Barrier/3.png', 500, 0),
+        
+        //Barrier Array
+    ]
     
 
 )
