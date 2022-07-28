@@ -73,7 +73,7 @@ class World {
     draw() {
 
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) //clear Canvas
-        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjects[0]);
         this.ctx.translate(this.camera_x, 0);
         this.addEndbossBarrier();
         this.drawLevelObjects();
@@ -123,11 +123,22 @@ class World {
             if (imageCounter == 3) {
                 imageCounter = 1;
             }
-            this.level.backgroundObjects.push(
-                new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0, this),
-                new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
-                new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2, this),
-                new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5, this))
+            //if (!this.endboss.hadFirstContact) {
+                this.level.backgroundObjects[0].push(
+                    new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0, this),
+                    new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
+                    new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2, this),
+                    new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5, this))
+           // }
+            //if (this.endboss.hadFirstContact){
+                this.level.backgroundObjects[1].push(
+                    new BackgroundObject(`img/3. Background/Layers/5. Water/D${imageCounter}.png`, firstBackground * i, 0, this),
+                    new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/D${imageCounter}.png`, firstBackground * i, 0.75, this),
+                    new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/D${imageCounter}.png`, firstBackground * i, 2, this),
+                    new BackgroundObject(`img/3. Background/Layers/2. Floor/D${imageCounter}.png`, firstBackground * i,5, this),
+                )
+           // }
+            
 
         }
             
@@ -191,7 +202,6 @@ class World {
             if (this.character.isColliding(jellyfish) && this.character.energy != 0 && !this.character.isInvulnerable()) {
                 this.character.hittedByJellyfish = true;
                 this.character.hit();
-                console.log('colliding Jellyfish', this.character.energy);
 
                 setTimeout(() => {
                     this.character.hittedByJellyfish = false;
@@ -222,7 +232,6 @@ class World {
                 this.character.hittedByPufferfish = true;
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
-                console.log('colliding Pufferfish', this.character.energy);
                 setTimeout(() => {
                     this.character.hittedByPufferfish = false;
                 }, 900);
@@ -236,7 +245,6 @@ class World {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
                 this.healthbar.setPercentage(this.character.energy)
-                console.log('colliding with boss')
             }
         })
     }
@@ -247,7 +255,6 @@ class World {
                 this.collectedCoins++;
                 this.level.coins.splice(index, 1);
                 this.coinbar.setCollectedCoins(this.collectedCoins)
-                console.log('colliding with coin')
             }
         })
     }
@@ -258,7 +265,6 @@ class World {
                 this.collectedBottles++;
                 this.level.poisonbottles.splice(index, 1);
                 this.poisonbar.setCollectedBottles(this.collectedBottles);
-                console.log('colliding with Bottle');
             }
         })
     }
@@ -275,7 +281,6 @@ class World {
                     this.bonushealthbar.setPercentage(this.character.energy)
                 }
 
-                console.log('colliding with Life', this.character.energy);
             }
         })
     }
@@ -284,10 +289,8 @@ class World {
         this.level.barriers.forEach(barrier => {
             if (this.character.isColliding(barrier)) {
                 this.character.barrierLeft = true;
-                console.log('barrier links');
             } else if (this.character.isColliding(barrier)) {
                 this.character.barrierRight = true;
-                console.log('barrier rechts');
             } else {
                 this.character.barrierLeft = false;
                 this.character.barrierRight = false;
@@ -312,7 +315,6 @@ class World {
                 }
 
                 this.endbossHealthbar.setPercentage(this.endboss.energy);
-                console.log('Endboss Collidiert mit Bubble', this.endboss.energy);
             }
         });
     }

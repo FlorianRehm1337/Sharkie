@@ -28,12 +28,12 @@ class Pufferfish_Red extends MovableObject {
         'img/2.Enemy/1.Puffer fish (3 color options)/2.transition/3.transition5.png',
     ];
 
-    constructor() {
+    constructor(x,y) {
         super().loadImage('img/2.Enemy/1.Puffer fish (3 color options)/1.Swim/3.swim1.png');
         this.loadImages(this.IMAGES_SWIMMING);
         this.loadImages(this.IMAGES_TRANSITION);
-        this.x = 1000 + Math.random() * 120;
-        this.y = Math.random() * ((450 - this.height) - 20 + 20);
+        this.x = x;
+        this.y = y;
         this.checkTime();
         this.swimLeft();
         this.animate();
@@ -43,25 +43,29 @@ class Pufferfish_Red extends MovableObject {
 
     animate(){
         setInterval(() => {
-            this.playAnimation(this.IMAGES_SWIMMING)
+            if (!this.isInTransition) {
+                this.playAnimation(this.IMAGES_SWIMMING);  
+            }
+           
         }, 100);
-       
-    }
+    } 
 
     checkTransition(){
         this.currentImage = 0;
         if (!this.isInTransition) {
             let transition = setInterval(() => {
                 this.loadImage(this.IMAGES_TRANSITION[4]);
+                this.isInTransition = true;
                 this.offset.height = 0;
             }, 100);
             setTimeout(() => {
                 clearInterval(transition);
+                this.isInTransition = false;
                 this.offset.height = 20;
-            }, 3000);
+            }, 1000);
             setTimeout(()=>{
                 this.checkTransition();
-            },6000)
+            },2500)
         }
     }
 

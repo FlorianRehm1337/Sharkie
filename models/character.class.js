@@ -268,7 +268,6 @@ class Character extends MovableObject {
             let spacePressed = setInterval(() => {
                 this.world.keyboard.SPACE = true;
                 this.checkAlreadyRunning = true;
-                console.log(this.world.keyboard.SPACE)
             }, 100)
 
             setTimeout(() => {
@@ -306,7 +305,6 @@ class Character extends MovableObject {
         setTimeout(() => {
             clearInterval(animation);
             clearInterval(playDeath);
-            console.log('intervall ist gestoppt');
         }, 1200);
     }
 
@@ -323,7 +321,6 @@ class Character extends MovableObject {
         setTimeout(() => {
             clearInterval(animation);
             clearInterval(playDeath);
-            console.log('intervall ist gestoppt');
         }, 1000)
     }
 

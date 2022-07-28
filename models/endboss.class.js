@@ -111,7 +111,23 @@ class Endboss extends MovableObject {
             i++;
 
             if (this.world.character.x > 2450 && !this.hadFirstContact) { //2450
+
+
                 this.hadFirstContact = true;
+                this.world.character.speed = 0;
+                this.world.level.backgroundObjects[1].forEach(background => {
+                    background.speed = 0;
+                });
+                this.world.level.backgroundObjects.splice(0,1);
+                let disable = setInterval(() =>{
+                    this.world.character.noKeyIsPressed();
+                },100)
+                setTimeout(() =>{
+                    clearInterval(disable);
+                    this.world.character.speed = 8;
+                    console.log(this.world.backgroundObjects)
+                },800)
+               
                 this.currentImage = 0;
                 i = 0;
                 this.introAlreadyPlayed = true;
@@ -134,7 +150,7 @@ class Endboss extends MovableObject {
             if (this.introCounter == this.IMAGES_INTRODUCE.length - 1 || this.introCounter > this.IMAGES_INTRODUCE) {
                 clearInterval(introInterval);
                 this.introAlreadyPlayed = true;
-                
+
             }
         }, 100);
     }
@@ -174,40 +190,37 @@ class Endboss extends MovableObject {
             }, 600)
         }
     }
-    
-    startMovement(){
-        
+
+    startMovement() {
+
         setInterval(() => {
             if (!this.isDead()) {
                 if (!this.collidedWithWall) {
                     this.x -= this.speed;
-                    console.log('links');
-                }else if(this.collidedWithWall){
+                } else if (this.collidedWithWall) {
                     this.x += this.speed;
-                    console.log('rechts');
-                }  
+                }
             }
-            
+
         }, 1000 / 60);
-        
+
     }
 
-    checkBossMovement(){
+    checkBossMovement() {
         setInterval(() => {
-            if(!this.isDead()){
-                
+            if (!this.isDead()) {
+
                 if (this.isColliding(this.world.level.barriers[0])) {
                     this.collidedWithWall = true;
                     this.otherDirection = true;
-                }else if(this.x > 3000){
+                } else if (this.x > 3000) {
                     this.collidedWithWall = false;
                     this.otherDirection = false;
-                    console.log('rechts');
-                }else if(this.energy <= 50){
+                } else if (this.energy <= 50) {
                     this.speed = 10;
                 }
             }
-            
+
         }, 1000 / 60);
     }
 }

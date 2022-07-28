@@ -1,14 +1,21 @@
 const level1 = new Level(
     [
-        new Pufferfish_Green(),
-        new Pufferfish_Orange(),
-        new Pufferfish_Red(),
+        new Pufferfish_Green(500, 100),
+        new Pufferfish_Orange(800, 250),
+        new Pufferfish_Red(1100, 400),
+        new Pufferfish_Green(1400, 250),
+        new Pufferfish_Orange(1700, 100),
+        new Pufferfish_Red(1500, 400),
     ],
     [
         new JellyFish_Yellow(500),
         new JellyFish_Pink(750),
         new JellyFish_Purple(1000),
         new JellyFish_Green(1250),
+        new JellyFish_Yellow(1500),
+        new JellyFish_Pink(1750),
+        new JellyFish_Purple(1900),
+        new JellyFish_Green(2100),
     ],
     [
         new Endboss(),
@@ -52,8 +59,14 @@ const level1 = new Level(
         new Life(1200),
         new Life(1500),
     ],
-    [
-        //BackgroundObjects Array
+    [//BackgroundObjects Array
+        [
+            //Light
+        ],
+        [
+            //Dark
+        ]
+        
     ],
     [
         //new Barrier('img/3. Background/Barrier/3.png', 500, 0),
