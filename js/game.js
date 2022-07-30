@@ -1,11 +1,33 @@
 let canvas;
 let world;
+let slider;
+let sliderText;
 let keyboard = new Keyboard();
+let audio;
 
 function init(){
+    
     canvas = document.getElementById('canvas');
-    world = new World(canvas,keyboard);
+    slider = document.getElementById('sliderWithValue');
+    sliderText = document.getElementById('sliderOutputText');
+    audio = new AudioCollection(slider,sliderText);
+    world = new World(canvas,keyboard,audio);
+    setListener(slider,sliderText);
+    saveValue(slider,sliderText);
 }
+
+function setListener(slider,sliderText){
+    slider.addEventListener('input', function(){
+        audio.sendSetting(slider,sliderText);
+    });
+}
+
+function saveValue(){
+    slider.addEventListener('change', function(){
+        audio.setVolume();
+    });
+}
+
 
 
 window.addEventListener('keydown', (e) => {

@@ -18,17 +18,21 @@ class World {
     energy = 100;
     endbossBarrierAdded = false;
     alreadyAttacking = false;
+    audios;
 
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, audioCollection) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.audios = audioCollection;
+        this.audios.normalBackground.play();
+        this.startBackgroundMusic();
         this.draw();
         this.setWorld();
         this.run();
         this.drawBackgroundObjects();
-
-    }
+        
+     }
 
     setWorld() {
         this.character.world = this;
@@ -45,6 +49,7 @@ class World {
     shootNormalBubble() {
         let bubble = new ThrowableObject(this.character.x + 200, this.character.y + 130, this.character.otherDirection, 'img/1.Sharkie/4.Attack/Bubble trap/Bubble.png', 'normal');
         this.throwableObjects.push(bubble);
+        this.audios.characterAttack.play();
     }
 
     shootPoisonBubble() {
@@ -53,8 +58,9 @@ class World {
             this.throwableObjects.push(poisonBubble);
             this.collectedBottles--;
             this.poisonbar.setCollectedBottles(this.collectedBottles);
-        }
+            this.audios.characterAttack.play();
 
+        }
     }
 
     checkCollisions() {
@@ -68,6 +74,15 @@ class World {
         this.characterIsCollidingBarrier();
         this.endbossIsCollidingBubbles();
         this.endbossIsCollidingPoisonBubbles();
+    }
+
+    startBackgroundMusic(){
+        let bgMusic = setInterval(() => {
+            this.audios.normalBackground.play();
+            if (this.endboss.hadFirstContact) {
+                clearInterval(bgMusic);
+            }
+        }, 16000); 
     }
 
     draw() {
@@ -202,6 +217,8 @@ class World {
             if (this.character.isColliding(jellyfish) && this.character.energy != 0 && !this.character.isInvulnerable()) {
                 this.character.hittedByJellyfish = true;
                 this.character.hit();
+                this.audios.jellyfishAttack.play();
+                this.audios.characterHurt.play();
 
                 setTimeout(() => {
                     this.character.hittedByJellyfish = false;
@@ -224,6 +241,7 @@ class World {
                     setTimeout(()=>{
                         this.level.pufferfishes.splice(index,1);
                         this.alreadyAttacking = false;
+                        this.audios.characterFinslap.play();
                     },600)
                     
                 
@@ -231,7 +249,8 @@ class World {
             if (this.character.isColliding(pufferfish) && this.character.energy != 0 && !this.character.isInvulnerable() && !this.keyboard.SPACE) {
                 this.character.hittedByPufferfish = true;
                 this.character.hit();
-                this.healthbar.setPercentage(this.character.energy)
+                this.audios.characterHurt.play();
+                this.healthbar.setPercentage(this.character.energy);
                 setTimeout(() => {
                     this.character.hittedByPufferfish = false;
                 }, 900);
@@ -244,7 +263,9 @@ class World {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
-                this.healthbar.setPercentage(this.character.energy)
+                this.healthbar.setPercentage(this.character.energy);
+                this.audios.characterHurt.play();
+
             }
         })
     }
@@ -252,6 +273,7 @@ class World {
     characterIsCollidingCoin() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin)) {
+                this.audios.coinCollection.play();
                 this.collectedCoins++;
                 this.level.coins.splice(index, 1);
                 this.coinbar.setCollectedCoins(this.collectedCoins)
@@ -265,6 +287,7 @@ class World {
                 this.collectedBottles++;
                 this.level.poisonbottles.splice(index, 1);
                 this.poisonbar.setCollectedBottles(this.collectedBottles);
+                this.audios.bottleCollection.play();
             }
         })
     }
@@ -273,6 +296,7 @@ class World {
         this.level.lifes.forEach((life, index) => {
             if (this.character.isColliding(life)) {
                 this.character.energy += 20;
+                this.audios.healthCollection.play();
                 this.level.lifes.splice(index, 1);
                 if (this.character.energy < 100) {
                     this.healthbar.setPercentage(this.character.energy)
@@ -312,6 +336,7 @@ class World {
                 } else if (!this.throwableObjects[index].hittedEndboss) {
                     this.endboss.energy -= 50;
                     this.throwableObjects[index].hittedEndboss = true;
+                    this.audios.bossHurt.play();
                 }
 
                 this.endbossHealthbar.setPercentage(this.endboss.energy);
@@ -323,6 +348,7 @@ class World {
         this.throwableObjects.forEach((bubble, index) => {
             if (this.endboss.isColliding(bubble) && this.throwableObjects[index].type == 'poison') {
                 this.endboss.status = 'poisoned';
+                this.audios.poisonBubble.play();
                 setTimeout(() => {
                     this.endboss.status = 'normal';
                 }, 1000)

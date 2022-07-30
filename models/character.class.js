@@ -119,7 +119,6 @@ class Character extends MovableObject {
     ];
 
     world;
-    swimming_sound = new Audio('audio/swim.mp3');
     checkAlreadyRunning = false;
     spaceAlreadyPressed = false;
     attacked = false;
@@ -149,29 +148,29 @@ class Character extends MovableObject {
     animate() {
 
         setInterval(() => {
-            this.swimming_sound.pause();
+            this.world.audios.characterMove.pause();
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x && !this.barrierRight) {
                 this.world.keyboard.LEFT = false;
                 this.x += this.speed;
                 this.otherDirection = false;
-                this.swimming_sound.play();
+                this.world.audios.characterMove.play();
             }
 
             if (this.world.keyboard.LEFT && this.x > 0 && !this.barrierLeft) {
                 this.world.keyboard.RIGHT = false;
                 this.x -= this.speed;
                 this.otherDirection = true;
-                this.swimming_sound.play();
+                this.world.audios.characterMove.play();
             }
 
             if (this.world.keyboard.UP && this.y > -115) { //-115 damit Sharkie nicht nach oben rausschwimmt
                 this.y -= this.speed;
-                this.swimming_sound.play();
+                this.world.audios.characterMove.play();
             }
 
             if (this.world.keyboard.DOWN && this.y < 285) { //285 damit Sharkie nicht nach unten rausschwimmt
                 this.y += this.speed;
-                this.swimming_sound.play();
+                this.world.audios.characterMove.play();
             }
 
             this.world.camera_x = -this.x + 50;

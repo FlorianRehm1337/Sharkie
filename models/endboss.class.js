@@ -96,7 +96,9 @@ class Endboss extends MovableObject {
         let animation = setInterval(() => {
 
             if (i < 10 && this.hadFirstContact) { //!this.introAlreadyPlayed
-                this.playAnimation(this.IMAGES_INTRODUCE);
+                    this.playAnimation(this.IMAGES_INTRODUCE);
+                    this.world.audios.bossIntroLaugh.play();
+
             } else if (this.isDead() && !this.deadAlreadyPlayed) {
                 this.startDeadCounter();
                 clearInterval(animation);
@@ -105,6 +107,7 @@ class Endboss extends MovableObject {
             } else if (!this.startAttack() && this.introAlreadyPlayed && this.status != 'poisoned' && !this.attacking) {
                 this.playAnimation(this.IMAGES_SWIMMING);
             } else if (this.startAttack() && this.introAlreadyPlayed) {
+                this.world.audios.bossAttack.play();
                 this.startAttackAnimation();
                 this.lastAttack = new Date().getTime();
             }
@@ -119,14 +122,18 @@ class Endboss extends MovableObject {
                     background.speed = 0;
                 });
                 this.world.level.backgroundObjects.splice(0,1);
+                this.world.audios.bossIntroLevel.play();
+
                 let disable = setInterval(() =>{
                     this.world.character.noKeyIsPressed();
+                    
                 },100)
                 setTimeout(() =>{
                     clearInterval(disable);
                     this.world.character.speed = 8;
-                    console.log(this.world.backgroundObjects)
-                },800)
+                    this.world.audios.bossBackground.play();
+
+                },1000)
                
                 this.currentImage = 0;
                 i = 0;
@@ -143,7 +150,7 @@ class Endboss extends MovableObject {
 
     }
 
-    addIntroCounter() {
+    /* addIntroCounter() {
         let introInterval = setInterval(() => {
             this.introCounter++;
             this.playAnimation(this.IMAGES_INTRODUCE);
@@ -153,7 +160,7 @@ class Endboss extends MovableObject {
 
             }
         }, 100);
-    }
+    } */
 
     startDeadCounter() {
         let deadInterval = setInterval(() => {
