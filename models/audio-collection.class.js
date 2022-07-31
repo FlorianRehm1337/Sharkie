@@ -43,9 +43,7 @@ class AudioCollection{
         }else{
            slider.value = this.currentVolume;
            sliderText.innerHTML = this.currentVolume;
-        }
-        
-        
+        }  
     }
 
     setVolume(){

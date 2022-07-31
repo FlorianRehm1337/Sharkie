@@ -13,112 +13,8 @@ class Character extends MovableObject {
         height: 50,
     }
 
-    IMAGES_SWIMMING = [
-        'img/1.Sharkie/3.Swim/1.png',
-        'img/1.Sharkie/3.Swim/2.png',
-        'img/1.Sharkie/3.Swim/3.png',
-        'img/1.Sharkie/3.Swim/4.png',
-        'img/1.Sharkie/3.Swim/5.png',
-        'img/1.Sharkie/3.Swim/6.png',
-    ];
-
-    IMAGES_DEAD = [
-        'img/1.Sharkie/6.dead/1.Poisoned/1.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/2.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/3.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/4.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/5.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/6.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/7.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/8.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/9.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/10.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/11.png',
-        'img/1.Sharkie/6.dead/1.Poisoned/12.png',
-    ];
-
-    IMAGES_DEAD_SHOCKED = [
-        'img/1.Sharkie/6.dead/2.Electro_shock/1.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/2.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/3.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/4.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/5.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/6.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/7.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/8.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/9.png',
-        'img/1.Sharkie/6.dead/2.Electro_shock/10.png',
-    ];
-
-    IMAGES_HURT = [
-        'img/1.Sharkie/5.Hurt/1.Poisoned/1.png',
-        'img/1.Sharkie/5.Hurt/1.Poisoned/2.png',
-        'img/1.Sharkie/5.Hurt/1.Poisoned/3.png',
-        'img/1.Sharkie/5.Hurt/1.Poisoned/4.png',
-        'img/1.Sharkie/5.Hurt/1.Poisoned/5.png',
-    ];
-
-    IMGAES_HURT_SHOCKED = [
-        'img/1.Sharkie/5.Hurt/2.Electric shock/1.png',
-        'img/1.Sharkie/5.Hurt/2.Electric shock/2.png',
-        'img/1.Sharkie/5.Hurt/2.Electric shock/3.png',
-
-    ];
-
-    IMAGES_FINSLAP = [
-        'img/1.Sharkie/4.Attack/Fin slap/1.png',
-        'img/1.Sharkie/4.Attack/Fin slap/2.png',
-        'img/1.Sharkie/4.Attack/Fin slap/3.png',
-        'img/1.Sharkie/4.Attack/Fin slap/4.png',
-        'img/1.Sharkie/4.Attack/Fin slap/5.png',
-        'img/1.Sharkie/4.Attack/Fin slap/6.png',
-        'img/1.Sharkie/4.Attack/Fin slap/7.png',
-        'img/1.Sharkie/4.Attack/Fin slap/8.png',
-    ];
-
-    IMAGES_IDLE = [
-        'img/1.Sharkie/1.IDLE/1.png',
-        'img/1.Sharkie/1.IDLE/2.png',
-        'img/1.Sharkie/1.IDLE/3.png',
-        'img/1.Sharkie/1.IDLE/4.png',
-        'img/1.Sharkie/1.IDLE/5.png',
-        'img/1.Sharkie/1.IDLE/6.png',
-        'img/1.Sharkie/1.IDLE/7.png',
-        'img/1.Sharkie/1.IDLE/8.png',
-        'img/1.Sharkie/1.IDLE/9.png',
-        'img/1.Sharkie/1.IDLE/10.png',
-        'img/1.Sharkie/1.IDLE/11.png',
-        'img/1.Sharkie/1.IDLE/12.png',
-        'img/1.Sharkie/1.IDLE/13.png',
-        'img/1.Sharkie/1.IDLE/14.png',
-        'img/1.Sharkie/1.IDLE/15.png',
-        'img/1.Sharkie/1.IDLE/16.png',
-        'img/1.Sharkie/1.IDLE/17.png',
-        'img/1.Sharkie/1.IDLE/18.png',
-    ];
-
-    IMAGES_NORMAL_ATTACK = [
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png',
-    ];
-
-    IMAGES_POISON_ATTACK = [
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/1.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/2.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/3.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/4.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/5.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/6.png',
-        'img/1.Sharkie/4.Attack/Bubble trap/Op2 (Without Bubbles)/7.png',
-    ];
-
     world;
+    assets;
     checkAlreadyRunning = false;
     spaceAlreadyPressed = false;
     attacked = false;
@@ -130,18 +26,22 @@ class Character extends MovableObject {
     barrierLeft = false;
     barrierRight = false;
 
-    constructor() { //constructer Sachen werden beim Starten sofort ausgeführt
+    constructor(world,assets) { //constructer Sachen werden beim Starten sofort ausgeführt
+        
         super().loadImage('img/1.Sharkie/3.Swim/1.png');
+        this.world = world;
+        this.assets = assets;
         this.x = 0;
-        this.loadImages(this.IMAGES_SWIMMING);
-        this.loadImages(this.IMAGES_DEAD_SHOCKED);
-        this.loadImages(this.IMAGES_DEAD);
-        this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMGAES_HURT_SHOCKED);
-        this.loadImages(this.IMAGES_FINSLAP);
-        this.loadImages(this.IMAGES_IDLE);
-        this.loadImages(this.IMAGES_NORMAL_ATTACK);
-        this.loadImages(this.IMAGES_POISON_ATTACK);
+        console.log(this.world.assets)
+        this.loadImages(this.assets.IMAGES_SWIMMING);
+        this.loadImages(this.assets.IMAGES_DEAD_SHOCKED);
+        this.loadImages(this.assets.IMAGES_DEAD);
+        this.loadImages(this.assets.IMAGES_HURT);
+        this.loadImages(this.assets.IMGAES_HURT_SHOCKED);
+        this.loadImages(this.assets.IMAGES_FINSLAP);
+        this.loadImages(this.assets.IMAGES_IDLE);
+        this.loadImages(this.assets.IMAGES_NORMAL_ATTACK);
+        this.loadImages(this.assets.IMAGES_POISON_ATTACK);
         this.animate();
     }
 
@@ -189,18 +89,18 @@ class Character extends MovableObject {
                 this.activateDeathAnimation(animation);
 
             } else if (this.isHurt() && this.hittedByJellyfish) {
-                this.playAnimation(this.IMGAES_HURT_SHOCKED);
+                this.playAnimation(this.assets.IMGAES_HURT_SHOCKED);
             } else if (this.isHurt() && this.hittedByPufferfish) {
-                this.playAnimation(this.IMAGES_HURT);
+                this.playAnimation(this.assets.IMAGES_HURT);
             } else if (this.world.keyboard.SPACE) {
                 this.activateSpace()
-                this.playAnimation(this.IMAGES_FINSLAP);
+                this.playAnimation(this.assets.IMAGES_FINSLAP);
                 this.spaceAlreadyPressed = true;
             } else if (!this.world.keyboard.D && this.checkMovementKeyIsPressed()) {
-                this.playAnimation(this.IMAGES_SWIMMING);
+                this.playAnimation(this.assets.IMAGES_SWIMMING);
 
             } else if (this.noKeyIsPressed() && !this.isDead()) {
-                this.playAnimation(this.IMAGES_IDLE);
+                this.playAnimation(this.assets.IMAGES_IDLE);
             }
 
         }, 100);
@@ -208,7 +108,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.D) {
                 this.activateAttack();
-                this.playAnimation(this.IMAGES_NORMAL_ATTACK);
+                this.playAnimation(this.assets.IMAGES_NORMAL_ATTACK);
                 this.attacked = true;
             }
         }, 60)
@@ -216,7 +116,7 @@ class Character extends MovableObject {
         setInterval(() => {
             if (this.world.keyboard.F && this.world.collectedBottles != 0) {
                 this.activatePoisonAttack();
-                this.playAnimation(this.IMAGES_POISON_ATTACK);
+                this.playAnimation(this.assets.IMAGES_POISON_ATTACK);
                 this.attacked = true;
             }
         }, 60)
@@ -294,7 +194,7 @@ class Character extends MovableObject {
     playPoisenedDeathAnimation(animation) {
         this.currentImage = 0;
         let playDeath = setInterval(() => {
-            this.playAnimation(this.IMAGES_DEAD);
+            this.playAnimation(this.assets.IMAGES_DEAD);
         }, 100);
 
         setTimeout(() => {
@@ -310,7 +210,7 @@ class Character extends MovableObject {
     playShockedDeathAnimation(animation) {
         this.currentImage = 0;
         let playDeath = setInterval(() => {
-            this.playAnimation(this.IMAGES_DEAD_SHOCKED);
+            this.playAnimation(this.assets.IMAGES_DEAD_SHOCKED);
         }, 100)
 
         setTimeout(() => {

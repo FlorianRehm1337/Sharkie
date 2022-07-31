@@ -1,6 +1,7 @@
 class World {
 
-    character = new Character();
+    assets;
+    character = new Character(this,assets);
     healthbar = new Healthbar();
     endbossHealthbar = new EndbossHealthbar(this);
     coinbar = new Coinbar();
@@ -20,10 +21,12 @@ class World {
     alreadyAttacking = false;
     audios;
 
-    constructor(canvas, keyboard, audioCollection) {
+    constructor(canvas, keyboard, audioCollection,assets) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.assets = assets;
+        console.log(this.assets)
         this.audios = audioCollection;
         this.audios.normalBackground.play();
         this.startBackgroundMusic();
@@ -31,11 +34,10 @@ class World {
         this.setWorld();
         this.run();
         this.drawBackgroundObjects();
-        
      }
 
     setWorld() {
-        this.character.world = this;
+        //this.character.world = this;
         this.endboss.world = this;
     }
 

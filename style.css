@@ -14,6 +14,39 @@ body{
     overflow-y: hidden;
 }
 
+.fullscreen-btn{
+    position: absolute;
+    width: 150px;
+    object-fit: contain;
+    cursor: pointer;
+    z-index: 0;
+    bottom: 75px;
+}
+
+.start-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.start-img{  
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+}
+
+.start-btn{
+    width: 150px;
+    z-index: 100;
+    cursor: pointer;
+
+}
+
 .wood_frame{
     position: absolute;
     top: -270px;
@@ -42,6 +75,10 @@ input[type=range].slider:not([orient=vertical]).has-output-tooltip+output{
     left: 0 !important;
     margin-left: auto;
     margin-right: auto;
+}
+
+.d-none{
+    display: none;
 }
 
 @media (max-width: 1200px) {

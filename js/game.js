@@ -3,6 +3,7 @@ let world;
 let slider;
 let sliderText;
 let keyboard = new Keyboard();
+let assets = new Assets();
 let audio;
 
 function init(){
@@ -11,9 +12,21 @@ function init(){
     slider = document.getElementById('sliderWithValue');
     sliderText = document.getElementById('sliderOutputText');
     audio = new AudioCollection(slider,sliderText);
-    world = new World(canvas,keyboard,audio);
+    world = new World(canvas,keyboard,audio,assets);
     setListener(slider,sliderText);
     saveValue(slider,sliderText);
+}
+
+function fullScreen(){
+    canvas.requestFullscreen();
+}
+
+function startGame(){
+    setTimeout(() =>{
+        document.getElementById('start-container').classList.add('d-none');
+    },200)
+    
+    initLevel();
 }
 
 function setListener(slider,sliderText){
