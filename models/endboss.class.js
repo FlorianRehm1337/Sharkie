@@ -87,21 +87,29 @@ class Endboss extends MovableObject {
         setTimeout(() => {
             this.animate();
         }, 1000);
-        this.x = 2800; //2800
-        /*          */
+        this.x = 2800;
+
     }
 
     animate() {
         let i = 0;
         let animation = setInterval(() => {
 
-            if (i < 10 && this.hadFirstContact) { //!this.introAlreadyPlayed
-                    this.playAnimation(this.IMAGES_INTRODUCE);
-                    this.world.audios.bossIntroLaugh.play();
+            if (i < 10 && this.hadFirstContact) {
+                this.playAnimation(this.IMAGES_INTRODUCE);
+                this.world.audios.normalBackground.pause();
+                this.world.audios.bossIntroLaugh.play();
 
             } else if (this.isDead() && !this.deadAlreadyPlayed) {
                 this.startDeadCounter();
                 clearInterval(animation);
+                setTimeout(() => {
+                    document.getElementById('win-screen').classList.remove('d-none');
+                    document.getElementById('tryagain-btn').classList.remove('d-none');
+                    this.world.keyboard = false;
+                    this.world.audios.bossBackground.pause();
+                    this.world.audios.win.play();
+                }, 1500)
             } else if (this.status == 'poisoned') {
                 this.playAnimation(this.IMAGES_POISONED);
             } else if (!this.startAttack() && this.introAlreadyPlayed && this.status != 'poisoned' && !this.attacking) {
@@ -113,7 +121,7 @@ class Endboss extends MovableObject {
             }
             i++;
 
-            if (this.world.character.x > 2450 && !this.hadFirstContact) { //2450
+            if (this.world.character.x > 2450 && !this.hadFirstContact) {
 
 
                 this.hadFirstContact = true;
@@ -121,20 +129,20 @@ class Endboss extends MovableObject {
                 this.world.level.backgroundObjects[1].forEach(background => {
                     background.speed = 0;
                 });
-                this.world.level.backgroundObjects.splice(0,1);
+                this.world.level.backgroundObjects.splice(0, 1);
                 this.world.audios.bossIntroLevel.play();
 
-                let disable = setInterval(() =>{
+                let disable = setInterval(() => {
                     this.world.character.noKeyIsPressed();
-                    
-                },100)
-                setTimeout(() =>{
+
+                }, 100)
+                setTimeout(() => {
                     clearInterval(disable);
                     this.world.character.speed = 8;
                     this.world.audios.bossBackground.play();
+                    this.world.audios.bossBackground.loop = true;
+                }, 1000)
 
-                },1000)
-               
                 this.currentImage = 0;
                 i = 0;
                 this.introAlreadyPlayed = true;
@@ -149,18 +157,6 @@ class Endboss extends MovableObject {
         }, 100);
 
     }
-
-    /* addIntroCounter() {
-        let introInterval = setInterval(() => {
-            this.introCounter++;
-            this.playAnimation(this.IMAGES_INTRODUCE);
-            if (this.introCounter == this.IMAGES_INTRODUCE.length - 1 || this.introCounter > this.IMAGES_INTRODUCE) {
-                clearInterval(introInterval);
-                this.introAlreadyPlayed = true;
-
-            }
-        }, 100);
-    } */
 
     startDeadCounter() {
         let deadInterval = setInterval(() => {
@@ -178,8 +174,8 @@ class Endboss extends MovableObject {
 
     startAttack() {
 
-        let timepassedlastAttack = new Date().getTime() - this.lastAttack; //Difference in ms
-        timepassedlastAttack = timepassedlastAttack / 1000; //Difference in s
+        let timepassedlastAttack = new Date().getTime() - this.lastAttack;
+        timepassedlastAttack = timepassedlastAttack / 1000;
         this.timepassedlastAttack = timepassedlastAttack;
         return timepassedlastAttack > 2;
     }

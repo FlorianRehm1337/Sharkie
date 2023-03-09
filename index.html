@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fonts.css">
     <link rel="stylesheet" href="node_modules/bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css">
     <link rel="stylesheet" href="node_modules/bulma-extensions/dist/css/bulma-extensions.min.css">
-    
+
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
     <script src="models/assets.class.js"></script>
@@ -40,29 +42,74 @@
     <script src="js/game.js"></script>
     <title>Sharkie</title>
 </head>
-<body onload="">
 
+<body>
+    <div class="rotate-device-overlay">
+        <h1>Please Rotate Your Device!</h1>
+    </div>
     <div id="start-container" class="start-container">
+        <h1 class="headline">Sharkie</h1>
         <img class="start-img" src="img/3. Background/Mesa de trabajo 1.png">
         <img onclick="startGame();init()" class="start-btn" src="img/6.Botones/Start/2.png">
     </div>
-    <img class="wood_frame" src="./img/wood_frame.png" alt="">
     <!-- <h1> Sharkie</h1> -->
-    <img class="fullscreen-btn" onclick="fullScreen()" src="img/6.Botones/Full Screen/Mesa de trabajo 7.png">
-    
-    <canvas id="canvas" width="720" height="480"></canvas>
 
-    <div class="slider-container">
-        <input id="sliderWithValue"  class="slider has-output-tooltip is-fullwidth is-info" min="0" max="100" value="50" step="1" type="range">
-        <output id="sliderOutputText" for="sliderWithValue">50</output>   
+    <div id="canvas-container" class="d-none" style="width: 720px; height: 480px; position: relative;">
+        <img id="win-screen" class="win-screen d-none" src="img/6.Botones/Try again/Mesa de trabajo 1.png"
+            alt="you-win.png">
+        <canvas id="canvas" width="720" height="480"></canvas>
+
+        <img id="tryagain-btn" onclick="restartGame()" class="tryagain-btn d-none"
+            src="img/6.Botones/Try again/Recurso 17.png" alt="try-agian.png">
+        <img id="settings-icon" class="settings-img" onclick="handleSettings()" src="custom imgs/settings-icon.svg"
+            alt="setting.svg">
+
+        <div id="settings" class="settings-container d-none">
+            <img class="close-img" onclick="handleSettings()" src="custom imgs/close-icon.svg" alt="close-icon.svg">
+            <div class="top-wrapper">
+                <div>
+                    <h1>Fullscreen</h1>
+                    <img class="fullscreen-btn" onclick="fullScreen()"
+                        src="img/6.Botones/Full Screen/Mesa de trabajo 7.png">
+                </div>
+                <div>
+                    <h1>Volume</h1>
+                    <div class="slider-container">
+                        <input id="sliderWithValue" class="slider has-output-tooltip is-fullwidth is-info" min="0"
+                            max="100" value="50" step="1" type="range">
+                        <output id="sliderOutputText" for="sliderWithValue">50</output>
+                    </div>
+                </div>
+            </div>
+            <div class="bottom-wrapper">
+                <div class="move-shark">
+                    <h1>Move Shark</h1>
+                    <img src="img/6.Botones/Key/arrow keys.png" alt="move-keys.png">
+                </div>
+                <div class="attack-wrapper">
+                    <h1>Attack</h1>
+                    <div class="attack-img-wrapper">
+                        <div>
+                            <img src="img/6.Botones/Key/D key.png" alt="D_key.png">
+                            <img src="img/6.Botones/Key/F key.png" alt="F_key">
+                        </div>
+                        <img src="img/6.Botones/Key/Space Bar key.png" alt="Space_key.png">
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-
 
     <script src="node_modules/bulma-extensions/bulma-slider/dist/js/bulma-slider.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bulma-slider@2.0.4/dist/js/bulma-slider.min.js"></script>
     </script>
     <script>
         bulmaSlider.attach();
+
     </script>
 </body>
+
 </html>

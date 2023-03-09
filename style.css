@@ -1,29 +1,39 @@
-@import 'bulma';
-@import 'bulma-slider';
+@import "bulma";
+@import "bulma-slider";
 
-body{
+body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0;
     background-color: black;
-    background-image: url('./img/bg_image.jpg');
+    background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("./img/bg_image.jpg");
     background-size: cover;
     height: 100vh;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
 }
 
-.fullscreen-btn{
-    position: absolute;
+.fullscreen-btn {
     width: 150px;
     object-fit: contain;
     cursor: pointer;
     z-index: 0;
-    bottom: 75px;
 }
 
-.start-container{
+.win-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.start-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,69 +41,228 @@ body{
     height: 100vh;
 }
 
-.start-img{  
+.start-img {
     position: absolute;
     z-index: 1;
     bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
     height: 100vh;
     object-fit: cover;
 }
 
-.start-btn{
-    width: 150px;
-    z-index: 100;
+.start-btn {
+    width: 250px;
+    z-index: 50;
     cursor: pointer;
-
-}
-
-.wood_frame{
     position: absolute;
-    top: -270px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.headline {
+    position: absolute;
+    top: 64px;
+    margin: 0;
+    z-index: 10;
+    color: purple;
+    text-shadow: 3px 3px white;
+    font-size: 64px;
+    font-family: "Luckiest Guy" !important;
+}
+
+.tryagain-btn {
+    position: absolute;
+    width: 200px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 20;
+}
+
+.settings-img {
+    cursor: pointer;
+    filter: invert(100%) sepia(1%) saturate(7453%) hue-rotate(341deg) brightness(106%) contrast(100%);
+    opacity: 0.9;
+    position: absolute;
+    right: 16px;
+    top: 64px;
+}
+
+.close-img {
+    cursor: pointer;
+    filter: invert(100%) sepia(1%) saturate(7453%) hue-rotate(341deg) brightness(106%) contrast(100%);
+    opacity: 0.9;
+    position: absolute;
+    right: 16px;
+    top: 64px;
+}
+
+.settings-container {
+    position: absolute;
+    top: 0;
     left: 0;
+    bottom: 0;
     right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    width: 1200px;
-    height: 1220px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
 }
 
-canvas{
+.settings-container h1 {
+    color: white;
+    font-family: "Luckiest Guy";
+}
+
+.top-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.top-wrapper div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 250px;
+}
+
+.bottom-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    padding-bottom: 32px;
+}
+
+.attack-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attack-img-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.attack-img-wrapper div {
+    display: flex;
+    gap: 32px;
+}
+
+.attack-img-wrapper div img {
+    width: 64px;
+    height: 64px;
+}
+
+.attack-img-wrapper img {
+    width: 250px;
+    height: 64px;
+    object-fit: contain;
+}
+
+.move-shark {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.move-shark img {
+    width: 200px;
+}
+
+canvas {
     background-color: black;
-    margin-left: 50px;
 }
 
-.slider-container{
+.slider-container {
     display: flex;
     position: relative;
-    margin-top: 32px;
     justify-content: center;
 }
 
-input[type=range].slider:not([orient=vertical]).has-output-tooltip+output{
+input[type="range"].slider:not([orient="vertical"]).has-output-tooltip + output {
     right: 0 !important;
     left: 0 !important;
     margin-left: auto;
     margin-right: auto;
+    z-index: 0 !important;
 }
 
-.d-none{
+#sliderOutputText {
+    top: -7.5px;
+}
+
+.slider {
+    margin-bottom: 0 !important;
+}
+
+.d-none {
+    display: none;
+}
+
+.canvasFullscreen {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.rotate-device-overlay {
     display: none;
 }
 
 @media (max-width: 1200px) {
-    .wood_frame{
-       width: 100%; 
+    .wood_frame {
+        width: 100%;
     }
 }
 
 @media (max-width: 1000px) {
-    .wood_frame{
+    .wood_frame {
         display: none;
     }
 
-    canvas{
+    canvas {
         width: 100%;
         margin-left: 0;
+    }
+}
+
+@media (max-width: 720px) {
+    #canvas-container {
+        width: 100% !important;
+    }
+
+    .rotate-device-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.75);
+        z-index: 75;
+    }
+
+    .rotate-device-overlay h1 {
+        text-align: center;
+        color: white;
+        font-size: 36px;
+        font-family: "Luckiest Guy";
     }
 }

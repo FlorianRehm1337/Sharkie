@@ -21,13 +21,14 @@ class AudioCollection{
     characterHurt = new Audio('audio/sharkie_hurt.mp3');
     characterFinslap = new Audio('audio/slap_sound.mp3');
     characterMove = new Audio('audio/swim.mp3');
+    win = new Audio('audio/win.mp3');
 
     constructor(slider,sliderText){
         this.slider = slider;
         this.sliderText = sliderText;
         this.currentVolume = localStorage.getItem('userSettedVolume');
         this.getVolume(slider,sliderText);  
-        this.setVolume()      
+        this.setVolume();
     }
 
     sendSetting(slider,sliderText){
@@ -68,6 +69,7 @@ class AudioCollection{
         this.characterAttack.volume = this.percentage;
         this.characterHurt.volume = this.percentage;
         this.characterFinslap.volume = this.percentage;
-        this.characterMove.volume = this.percentage;   
+        this.characterMove.volume = this.percentage;
+        this.win.volume = this.percentage; 
     }
 }

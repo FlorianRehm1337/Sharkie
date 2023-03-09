@@ -5,6 +5,8 @@ let sliderText;
 let keyboard = new Keyboard();
 let assets = new Assets();
 let audio;
+let fullScreenIsActive = false;
+let settingsOpened = false;
 
 function init(){
     
@@ -18,15 +20,35 @@ function init(){
 }
 
 function fullScreen(){
-    canvas.requestFullscreen();
+    document.getElementById('canvas').classList.add('canvasFullscreen');
+    fullScreenIsActive = true;
 }
 
 function startGame(){
+    document.getElementById('canvas-container').classList.remove('d-none');
     setTimeout(() =>{
         document.getElementById('start-container').classList.add('d-none');
     },200)
     
     initLevel();
+}
+
+function handleSettings(){
+
+    if (!settingsOpened) {
+        document.getElementById('settings').classList.remove('d-none');
+        document.getElementById('settings-icon').classList.add('d-none');
+        settingsOpened = true;
+    }else{
+        document.getElementById('settings').classList.add('d-none');
+        document.getElementById('settings-icon').classList.remove('d-none');
+        settingsOpened = false;
+    }
+    
+}
+
+function restartGame(){
+    location.reload();
 }
 
 function setListener(slider,sliderText){
@@ -40,8 +62,6 @@ function saveValue(){
         audio.setVolume();
     });
 }
-
-
 
 window.addEventListener('keydown', (e) => {
 
@@ -76,6 +96,11 @@ window.addEventListener('keydown', (e) => {
     if(e.keyCode == 70){
         keyboard.F = true;
     }
+    if (e.keyCode == 27 && fullScreenIsActive) {
+        document.getElementById('canvas').classList.remove('canvasFullscreen');
+        fullScreenIsActive = false;
+    }
+
 })
 
 window.addEventListener('keyup', (e) => {

@@ -28,7 +28,6 @@ class World {
         this.assets = assets;
         console.log(this.assets)
         this.audios = audioCollection;
-        this.audios.normalBackground.play();
         this.startBackgroundMusic();
         this.draw();
         this.setWorld();
@@ -37,14 +36,12 @@ class World {
      }
 
     setWorld() {
-        //this.character.world = this;
         this.endboss.world = this;
     }
 
     run() {
         setInterval(() => {
             this.checkCollisions();
-            //this.checkThrowObjects();
         }, 100);
     }
 
@@ -79,34 +76,29 @@ class World {
     }
 
     startBackgroundMusic(){
-        let bgMusic = setInterval(() => {
             this.audios.normalBackground.play();
-            if (this.endboss.hadFirstContact) {
-                clearInterval(bgMusic);
-            }
-        }, 16000); 
+            this.audios.normalBackground.loop = true;
     }
 
     draw() {
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height) //clear Canvas
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
         this.addObjectsToMap(this.level.backgroundObjects[0]);
         this.ctx.translate(this.camera_x, 0);
         this.addEndbossBarrier();
         this.drawLevelObjects();
+
         if (this.endboss.hadFirstContact) {
             this.addToMap(this.endbossHealthbar);
         }
 
-        this.ctx.translate(-this.camera_x, 0); //Back
+        this.ctx.translate(-this.camera_x, 0);
         this.drawCharacter();
         this.drawStatusbars();
-        this.ctx.translate(this.camera_x, 0); //Forwards
+        this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.throwableObjects);
+        this.ctx.translate(-this.camera_x, 0);
 
-        this.ctx.translate(-this.camera_x, 0); //Back
-
-        // Draw() wird immer wieder aufgerufen
         this.startAnimationFrame()
 
     }
@@ -155,11 +147,7 @@ class World {
                     new BackgroundObject(`img/3. Background/Layers/2. Floor/D${imageCounter}.png`, firstBackground * i,5, this),
                 )
            // }
-            
-
         }
-            
-        
     }
 
     drawLevelObjects() {
@@ -182,7 +170,6 @@ class World {
             this.addToMap(this.bonushealthbar);
         }
     }
-
 
     addToMap(mo) {
         if (mo.otherDirection) {
@@ -330,7 +317,6 @@ class World {
                 this.throwableObjects[index].type == 'normal' &&
                 this.endboss.status == 'poisoned' &&
                 !this.throwableObjects[index].hittedEndboss) {
-
 
                 if (this.endboss.energy <= 0 && !this.throwableObjects[index].hittedEndboss) {
                     this.endboss.energy == 0;

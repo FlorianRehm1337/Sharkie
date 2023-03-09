@@ -106,6 +106,6 @@ class Assets{
         ]
 
     constructor(){
-        console.log('helloooo')
+        
     }
 }
