@@ -1,7 +1,7 @@
 class World {
 
     assets;
-    character = new Character(this,assets);
+    character = new Character(this, assets);
     healthbar = new Healthbar();
     endbossHealthbar = new EndbossHealthbar(this);
     coinbar = new Coinbar();
@@ -21,7 +21,7 @@ class World {
     alreadyAttacking = false;
     audios;
 
-    constructor(canvas, keyboard, audioCollection,assets) {
+    constructor(canvas, keyboard, audioCollection, assets) {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
@@ -32,7 +32,7 @@ class World {
         this.setWorld();
         this.run();
         this.drawBackgroundObjects();
-     }
+    }
 
     setWorld() {
         this.endboss.world = this;
@@ -74,9 +74,9 @@ class World {
         this.endbossIsCollidingPoisonBubbles();
     }
 
-    startBackgroundMusic(){
-            this.audios.normalBackground.play();
-            this.audios.normalBackground.loop = true;
+    startBackgroundMusic() {
+        this.audios.normalBackground.play();
+        this.audios.normalBackground.loop = true;
     }
 
     draw() {
@@ -110,9 +110,9 @@ class World {
     }
 
     drawCharacter() {
-            this.ctx.translate(this.camera_x, 0); //Forwards
-            this.addToMap(this.character);
-            this.ctx.translate(-this.camera_x, 0); //Back
+        this.ctx.translate(this.camera_x, 0); //Forwards
+        this.addToMap(this.character);
+        this.ctx.translate(-this.camera_x, 0); //Back
     }
 
     addEndbossBarrier() {
@@ -131,17 +131,17 @@ class World {
             if (imageCounter == 3) {
                 imageCounter = 1;
             }
-                this.level.backgroundObjects[0].push(
-                    new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0, this),
-                    new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
-                    new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2, this),
-                    new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5, this))
-                this.level.backgroundObjects[1].push(
-                    new BackgroundObject(`img/3. Background/Layers/5. Water/D${imageCounter}.png`, firstBackground * i, 0, this),
-                    new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/D${imageCounter}.png`, firstBackground * i, 0.75, this),
-                    new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/D${imageCounter}.png`, firstBackground * i, 2, this),
-                    new BackgroundObject(`img/3. Background/Layers/2. Floor/D${imageCounter}.png`, firstBackground * i,5, this),
-                )
+            this.level.backgroundObjects[0].push(
+                new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0, this),
+                new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
+                new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2, this),
+                new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5, this))
+            this.level.backgroundObjects[1].push(
+                new BackgroundObject(`img/3. Background/Layers/5. Water/D${imageCounter}.png`, firstBackground * i, 0, this),
+                new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/D${imageCounter}.png`, firstBackground * i, 0.75, this),
+                new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/D${imageCounter}.png`, firstBackground * i, 2, this),
+                new BackgroundObject(`img/3. Background/Layers/2. Floor/D${imageCounter}.png`, firstBackground * i, 5, this),
+            )
         }
     }
 
@@ -219,16 +219,16 @@ class World {
     }
 
     characterIsCollidingPufferfish() {
-        this.level.pufferfishes.forEach((pufferfish,index) => {
-            if (this.character.isColliding(pufferfish) && this.keyboard.SPACE && !this.alreadyAttacking){
-                    this.alreadyAttacking = true;
-                    setTimeout(()=>{
-                        this.level.pufferfishes.splice(index,1);
-                        this.alreadyAttacking = false;
-                        this.audios.characterFinslap.play();
-                    },600)
-                    
-                
+        this.level.pufferfishes.forEach((pufferfish, index) => {
+            if (this.character.isColliding(pufferfish) && this.keyboard.SPACE && !this.alreadyAttacking) {
+                this.alreadyAttacking = true;
+                setTimeout(() => {
+                    this.level.pufferfishes.splice(index, 1);
+                    this.alreadyAttacking = false;
+                    this.audios.characterFinslap.play();
+                }, 600)
+
+
             }
             if (this.character.isColliding(pufferfish) && this.character.energy != 0 && !this.character.isInvulnerable() && !this.keyboard.SPACE) {
                 this.character.hittedByPufferfish = true;
@@ -313,13 +313,15 @@ class World {
                 this.endboss.status == 'poisoned' &&
                 !this.throwableObjects[index].hittedEndboss) {
 
-                if (this.endboss.energy <= 0 && !this.throwableObjects[index].hittedEndboss) {
-                    this.endboss.energy == 0;
-
-                } else if (!this.throwableObjects[index].hittedEndboss) {
+                if (!this.throwableObjects[index].hittedEndboss) {
                     this.endboss.energy -= 30;
                     this.throwableObjects[index].hittedEndboss = true;
                     this.audios.bossHurt.play();
+
+                    if (this.endboss.energy <= 0) {
+                        this.endboss.energy = 0;
+
+                    }
                 }
 
                 this.endbossHealthbar.setPercentage(this.endboss.energy);
