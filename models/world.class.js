@@ -15,7 +15,7 @@ class World {
     keyboard;
     camera_x = 0;
     collectedCoins = 0;
-    collectedBottles = 100;
+    collectedBottles = 0;
     energy = 100;
     endbossBarrierAdded = false;
     alreadyAttacking = false;
@@ -26,7 +26,6 @@ class World {
         this.canvas = canvas;
         this.keyboard = keyboard;
         this.assets = assets;
-        console.log(this.assets)
         this.audios = audioCollection;
         this.startBackgroundMusic();
         this.draw();
@@ -132,21 +131,17 @@ class World {
             if (imageCounter == 3) {
                 imageCounter = 1;
             }
-            //if (!this.endboss.hadFirstContact) {
                 this.level.backgroundObjects[0].push(
                     new BackgroundObject(`img/3. Background/Layers/5. Water/L${imageCounter}.png`, firstBackground * i, 0, this),
                     new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/L${imageCounter}.png`, firstBackground * i, 0.75, this),
                     new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/L${imageCounter}.png`, firstBackground * i, 2, this),
                     new BackgroundObject(`img/3. Background/Layers/2. Floor/L${imageCounter}.png`, firstBackground * i, 5, this))
-           // }
-            //if (this.endboss.hadFirstContact){
                 this.level.backgroundObjects[1].push(
                     new BackgroundObject(`img/3. Background/Layers/5. Water/D${imageCounter}.png`, firstBackground * i, 0, this),
                     new BackgroundObject(`img/3. Background/Layers/4.Fondo 2/D${imageCounter}.png`, firstBackground * i, 0.75, this),
                     new BackgroundObject(`img/3. Background/Layers/3.Fondo 1/D${imageCounter}.png`, firstBackground * i, 2, this),
                     new BackgroundObject(`img/3. Background/Layers/2. Floor/D${imageCounter}.png`, firstBackground * i,5, this),
                 )
-           // }
         }
     }
 
@@ -251,7 +246,7 @@ class World {
     characterIsCollidingEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss)) {
-                this.character.hit();
+                this.character.hit(endboss);
                 this.healthbar.setPercentage(this.character.energy);
                 this.audios.characterHurt.play();
 
@@ -322,7 +317,7 @@ class World {
                     this.endboss.energy == 0;
 
                 } else if (!this.throwableObjects[index].hittedEndboss) {
-                    this.endboss.energy -= 50;
+                    this.endboss.energy -= 30;
                     this.throwableObjects[index].hittedEndboss = true;
                     this.audios.bossHurt.play();
                 }

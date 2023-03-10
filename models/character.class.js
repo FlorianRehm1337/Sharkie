@@ -26,13 +26,12 @@ class Character extends MovableObject {
     barrierLeft = false;
     barrierRight = false;
 
-    constructor(world,assets) { //constructer Sachen werden beim Starten sofort ausgeführt
+    constructor(world,assets) {
         
         super().loadImage('img/1.Sharkie/3.Swim/1.png');
         this.world = world;
         this.assets = assets;
         this.x = 0;
-        console.log(this.world.assets)
         this.loadImages(this.assets.IMAGES_SWIMMING);
         this.loadImages(this.assets.IMAGES_DEAD_SHOCKED);
         this.loadImages(this.assets.IMAGES_DEAD);
@@ -63,12 +62,12 @@ class Character extends MovableObject {
                 this.world.audios.characterMove.play();
             }
 
-            if (this.world.keyboard.UP && this.y > -115) { //-115 damit Sharkie nicht nach oben rausschwimmt
+            if (this.world.keyboard.UP && this.y > -115) { 
                 this.y -= this.speed;
                 this.world.audios.characterMove.play();
             }
 
-            if (this.world.keyboard.DOWN && this.y < 285) { //285 damit Sharkie nicht nach unten rausschwimmt
+            if (this.world.keyboard.DOWN && this.y < 285) {
                 this.y += this.speed;
                 this.world.audios.characterMove.play();
             }
@@ -80,12 +79,18 @@ class Character extends MovableObject {
 
             if (this.isDead() && this.hittedByJellyfish && !this.hittedByPufferfish) {
                 this.killedByJellyfish = true;
+                document.getElementById('tryagain-btn').classList.remove('d-none');
                 this.world.keyboard = false;
+                this.world.audios.bossBackground.pause();
+                this.world.audios.loose.play();
                 this.activateDeathAnimation(animation);
 
-            } else if (this.isDead() && this.hittedByPufferfish && !this.hittedByJellyfish) {
+            } else if (this.isDead()) {
                 this.killedByPufferfish = true;
+                document.getElementById('tryagain-btn').classList.remove('d-none');
                 this.world.keyboard = false;
+                this.world.audios.bossBackground.pause();
+                this.world.audios.loose.play();
                 this.activateDeathAnimation(animation);
 
             } else if (this.isHurt() && this.hittedByJellyfish) {
@@ -128,7 +133,7 @@ class Character extends MovableObject {
             let DIsPressed = setInterval(() => {
                 this.attacked = true;
                 this.world.keyboard.D = true;
-            }, 100)//60
+            }, 100)
 
             setTimeout(() => {
                 
@@ -136,7 +141,7 @@ class Character extends MovableObject {
                 this.attacked = false;
                 this.world.keyboard.D = false;
                 this.world.shootNormalBubble();
-            }, 500)//500
+            }, 500)
         }
 
     }
@@ -147,7 +152,7 @@ class Character extends MovableObject {
             let DIsPressed = setInterval(() => {
                 this.attacked = true;
                 this.world.keyboard.F = true;
-            }, 100)//60
+            }, 100)
 
             setTimeout(() => {
                 
@@ -155,7 +160,7 @@ class Character extends MovableObject {
                 this.attacked = false;
                 this.world.keyboard.F = false;
                 this.world.shootPoisonBubble();
-            }, 400)//500
+            }, 400)
         }
 
     }

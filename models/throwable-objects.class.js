@@ -11,7 +11,6 @@ class ThrowableObject extends MovableObject{
         this.width = 40;
         this.height = 40;
         this.throw();
-        console.log(this.type);
     }
 
     throw(){

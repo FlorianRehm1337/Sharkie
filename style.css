@@ -1,5 +1,5 @@
-@import "bulma";
-@import "bulma-slider";
+@import url("node_modules/bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css");
+@import url("node_modules/bulma-extensions/dist/css/bulma-extensions.min.css");
 
 body {
     display: flex;
@@ -11,7 +11,6 @@ body {
     background-image: linear-gradient(to left, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("./img/bg_image.jpg");
     background-size: cover;
     height: 100vh;
-    /* overflow-y: hidden; */
 }
 
 .fullscreen-btn {
@@ -205,7 +204,7 @@ input[type="range"].slider:not([orient="vertical"]).has-output-tooltip + output 
 }
 
 .d-none {
-    display: none;
+    display: none !important;
 }
 
 .canvasFullscreen {
@@ -219,6 +218,33 @@ input[type="range"].slider:not([orient="vertical"]).has-output-tooltip + output 
 
 .rotate-device-overlay {
     display: none;
+}
+
+.movement-btns {
+    display: none;
+}
+
+.attack-btns {
+    display: none;
+}
+
+.info-icon {
+    position: absolute;
+    top: 64px;
+    right: 64px;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.info-container {
+    z-index: 75;
+    max-width: 500px;
+    font-size: 32px;
+    font-family: "Luckiest Guy";
+    color: white;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 40px;
+    padding: 32px;
 }
 
 @media (max-width: 1200px) {
@@ -264,5 +290,89 @@ input[type="range"].slider:not([orient="vertical"]).has-output-tooltip + output 
         color: white;
         font-size: 36px;
         font-family: "Luckiest Guy";
+    }
+}
+
+@media screen and (orientation: landscape) and (max-width: 900px) {
+    body {
+        height: unset;
+    }
+
+    canvas {
+        height: 100vh !important;
+    }
+
+    #canvas-container {
+        width: 100% !important;
+        height: unset !important;
+        display: flex;
+    }
+
+    #rotate-overlay {
+        display: none !important;
+    }
+
+    .movement-btns {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        left: 64px;
+        bottom: 32px;
+        width: 100px;
+    }
+
+    .movement-btns div {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .movement-btns img {
+        width: 42px;
+        height: 42px;
+        object-fit: contain;
+        background-color: rgb(0, 179, 255);
+        border-radius: 100%;
+    }
+
+    .attack-btns {
+        display: flex;
+        align-items: center;
+        position: absolute;
+        right: 64px;
+        bottom: 32px;
+    }
+
+    .attack-btns div {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+    }
+
+    .attack-btns img {
+        width: 50px;
+        height: 50px;
+        object-fit: contain;
+        background-color: rgb(0, 179, 255);
+        border-radius: 100%;
+    }
+
+    .fullscreen-btn {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .info-icon {
+        position: absolute;
+        top: 32px;
+        right: 32px;
+        z-index: 10;
+        cursor: pointer;
+    }
+
+    .info-container {
+        max-width: 600px;
+        font-size: 24px;
+        padding: 24px;
     }
 }

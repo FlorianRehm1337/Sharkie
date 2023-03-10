@@ -22,12 +22,13 @@ class AudioCollection{
     characterFinslap = new Audio('audio/slap_sound.mp3');
     characterMove = new Audio('audio/swim.mp3');
     win = new Audio('audio/win.mp3');
+    loose = new Audio('audio/game_over.mp3');
 
     constructor(slider,sliderText){
         this.slider = slider;
         this.sliderText = sliderText;
         this.currentVolume = localStorage.getItem('userSettedVolume');
-        this.getVolume(slider,sliderText);  
+        this.getVolume(slider,sliderText);
         this.setVolume();
     }
 
@@ -71,5 +72,6 @@ class AudioCollection{
         this.characterFinslap.volume = this.percentage;
         this.characterMove.volume = this.percentage;
         this.win.volume = this.percentage; 
+        this.loose.volume = this.percentage; 
     }
 }

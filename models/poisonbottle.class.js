@@ -1,8 +1,8 @@
 class PoisonBottle extends MovableObject{
     width = 50;
-    height = 50;
+    height = 100;
     x = 100;
-    y = 100;
+    y = 0;
 
     IMAGES_POISONBOTTLE = [
         'img/4. Marcadores/Posión/Animada/1.png',
@@ -19,7 +19,7 @@ class PoisonBottle extends MovableObject{
         super().loadImage('img/4. Marcadores/Posión/Animada/1.png');
         this.loadImages(this.IMAGES_POISONBOTTLE);
         this.x = x;
-        this.y = 375 + 50 * Math.random();
+        this.y = 375 + 5 * Math.random();
         this.animate();
     }
 

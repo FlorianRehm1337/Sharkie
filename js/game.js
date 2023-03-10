@@ -7,6 +7,7 @@ let assets = new Assets();
 let audio;
 let fullScreenIsActive = false;
 let settingsOpened = false;
+let infoOpened = false;
 
 function init(){
     
@@ -137,3 +138,49 @@ window.addEventListener('keyup', (e) => {
         keyboard.F = true;
     }
 })
+
+function left(value,event) {
+    event.preventDefault();
+    keyboard.LEFT = value;
+}
+
+function right(value, event) {
+    event.preventDefault();
+    keyboard.RIGHT = value;
+}
+
+function up(value, event) {
+    event.preventDefault();
+    keyboard.UP = value;
+}
+
+function down(value, event) {
+    event.preventDefault();
+    keyboard.DOWN = value;
+}
+
+function normalBubble(value, event) {
+    event.preventDefault();
+    keyboard.D = value;
+}
+
+function poisonBubble(value, event) {
+    event.preventDefault();
+    keyboard.F = value;
+}
+
+function slap(value, event) {
+    event.preventDefault();
+    keyboard.SPACE = value;
+}
+
+function showInfo(){
+    if (infoOpened) {
+        document.getElementById('info-container').classList.add('d-none');
+        infoOpened = false;
+    } else {
+        document.getElementById('info-container').classList.remove('d-none');
+        infoOpened = true;
+    }
+    
+}

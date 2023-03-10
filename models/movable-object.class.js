@@ -18,55 +18,55 @@ class MovableObject extends DrawableObject {
 
     isColliding(mo) {
         return this.isHorizontalIntersection(mo) && this.isVerticalIntersection(mo);
-        
-        /* !(mo.y + mo.offset.y > this.y + this.height - this.offset.height + this.offset.y ||
-            mo.y + mo.height - mo.offset.height + mo.offset.y < this.y + this.offset.y) &&
-            !(mo.x + mo.offset.x > this.x + this.width - this.offset.width + this.offset.x ||
-                mo.x + mo.width - mo.offset.width + mo.offset.x < this.x + this.offset.x) */
     }
 
-    isHorizontalIntersection(mo){
+    isHorizontalIntersection(mo) {
         return !(this.isLeftSide(mo) || this.isRightSide(mo));
     }
 
-    isVerticalIntersection(mo){
+    isVerticalIntersection(mo) {
         return !(this.isAbove(mo) || this.isBelow(mo));
     }
 
-    isAbove(mo){
+    isAbove(mo) {
         return !(this.getHitBoxBottomPos() > mo.getHitBoxTopPos());
     }
 
-    isBelow(mo){
+    isBelow(mo) {
         return !(this.getHitBoxTopPos() < mo.getHitBoxBottomPos());
     }
 
-    isLeftSide(mo){
+    isLeftSide(mo) {
         return !(this.getHitBoxRightPos() > mo.getHitBoxLeftPos());
     }
 
-    isRightSide(mo){
+    isRightSide(mo) {
         return !(this.getHitBoxLeftPos() < mo.getHitBoxRightPos());
     }
 
-    getHitBoxRightPos(){
+    getHitBoxRightPos() {
         return this.x + this.width - this.offset.width;
     }
 
-    getHitBoxLeftPos(){
+    getHitBoxLeftPos() {
         return this.x + this.offset.x;
     }
 
-    getHitBoxTopPos(){
+    getHitBoxTopPos() {
         return this.y + this.offset.y;
     }
 
-    getHitBoxBottomPos(){
+    getHitBoxBottomPos() {
         return this.y + this.height - this.offset.height;
     }
 
-    hit() {
-        //this.energy -= 75;
+    hit(mo) {
+        if (mo instanceof Endboss) {
+            this.energy -= 10;
+        } else {
+            this.energy -= 20;
+        }
+
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -74,21 +74,21 @@ class MovableObject extends DrawableObject {
         }
     }
 
-    isInvulnerable(){
-        if(this.timepassed < 2){
+    isInvulnerable() {
+        if (this.timepassed < 2) {
             return true;
-        } else{
+        } else {
             return false;
         }
     }
 
     isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit; //Difference in ms
-        timepassed = timepassed / 1000; //Difference in s
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
         this.timepassed = timepassed;
         return timepassed < 1;
     }
-    
+
 
     isDead() {
         return this.energy == 0;
@@ -104,7 +104,7 @@ class MovableObject extends DrawableObject {
     swimVerticalDown(height) {
 
         let swimDown = setInterval(() => {
-            if(this.isDead()){
+            if (this.isDead()) {
                 clearInterval(swimDown)
             }
             if (this instanceof JellyFish_Pink || this instanceof JellyFish_Green) {
@@ -113,7 +113,7 @@ class MovableObject extends DrawableObject {
                 this.y -= 2;
             }
 
-            if (this.y < 0) { //wenn y kleiner als 0 ist (er schwimmt oben raus) ,dann schwimm runter
+            if (this.y < 0) {
                 clearInterval(swimDown)
                 this.swimVerticalUp(height);
             }
@@ -123,7 +123,7 @@ class MovableObject extends DrawableObject {
     swimVerticalUp(height) {
 
         let swimUp = setInterval(() => {
-            if(this.isDead()){
+            if (this.isDead()) {
                 clearInterval(swimUp)
             }
             if (this instanceof JellyFish_Pink || this instanceof JellyFish_Green) {
@@ -131,7 +131,7 @@ class MovableObject extends DrawableObject {
             } else {
                 this.y += 2;
             }
-            if (this.y + this.height > 480) { //wenn y größer ist als 400 (er schwimmt unten raus), dann schwimm hoch
+            if (this.y + this.height > 480) {
                 clearInterval(swimUp)
                 this.swimVerticalDown(height);
             }
@@ -175,17 +175,13 @@ class MovableObject extends DrawableObject {
         }, 100);
     }
 
-    moveLeft(){
+    moveLeft() {
         this.x -= this.speed;
     }
 
-    moveRight(){
+    moveRight() {
         this.x += this.speed;
-    
-    }
 
-    dash(){
-        this.x += 10; 
     }
 
     swimUpAfterDeath() {

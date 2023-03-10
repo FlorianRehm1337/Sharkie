@@ -7,8 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="fonts.css">
-    <link rel="stylesheet" href="node_modules/bulma-extensions/bulma-slider/dist/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="node_modules/bulma-extensions/dist/css/bulma-extensions.min.css">
+    <link rel="shortcut icon" href="img/1.Sharkie/1.IDLE/1.png" type="image/x-icon">
 
     <script src="models/drawable-object.class.js"></script>
     <script src="models/movable-object.class.js"></script>
@@ -44,19 +43,55 @@
 </head>
 
 <body>
-    <div class="rotate-device-overlay">
+    <div id="rotate-overlay" class="rotate-device-overlay">
         <h1>Please Rotate Your Device!</h1>
     </div>
     <div id="start-container" class="start-container">
         <h1 class="headline">Sharkie</h1>
         <img class="start-img" src="img/3. Background/Mesa de trabajo 1.png">
         <img onclick="startGame();init()" class="start-btn" src="img/6.Botones/Start/2.png">
+        <img class="info-icon" onclick="showInfo()" src="custom imgs/info-icon.svg" alt="info.svg">
+        <div id="info-container" class="info-container d-none">
+            <span>Welcome to Sharkie. The goal is to collect as many <font style="color: gold">coins</font> as possible and collect every <font style="color: lawngreen">poison bottle</font> on the way to the
+            final boss. Because every <font style="color: lawngreen">poison bottle</font> is important!<br>
+            <br>
+            There is a little trick at the final boss, maybe you will find it out :)</span>
+        </div>
     </div>
-    <!-- <h1> Sharkie</h1> -->
 
     <div id="canvas-container" class="d-none" style="width: 720px; height: 480px; position: relative;">
         <img id="win-screen" class="win-screen d-none" src="img/6.Botones/Try again/Mesa de trabajo 1.png"
             alt="you-win.png">
+        <div class="movement-btns">
+            <img onmousedown="left(true,event)" onmouseup="left(false,event)" onmouseout="left(false,event)"
+                ontouchstart="left(true,event)" ontouchend="left(false,event)" src="custom imgs/arrow_btn_left.png"
+                alt="btn_left.png">
+            <div>
+                <img onmousedown="up(true,event)" onmouseup="up(false,event)" onmouseout="up(false,event)"
+                    ontouchstart="up(true,event)" ontouchend="up(false,event)" src="custom imgs/arrow_btn_top.png"
+                    alt="btn_top.png">
+                <img onmousedown="down(true,event)" onmouseup="down(false,event)" onmouseout="down(false,event)"
+                    ontouchstart="down(true,event)" ontouchend="down(false,event)"
+                    src="custom imgs/arrow_btn_bottom.png" alt="btn_bottom.png">
+            </div>
+            <img onmousedown="right(true,event)" onmouseup="right(false,event)" onmouseout="right(false,event)"
+                ontouchstart="right(true,event)" ontouchend="right(false,event)" src="custom imgs/arrow_btn_right.png"
+                alt="btn_right.png">
+        </div>
+        <div class="attack-btns">
+            <img onmousedown="slap(true,event)" onmouseup="slap(false,event)" onmouseout="slap(false,event)"
+                ontouchstart="slap(true,event)" ontouchend="slap(false,event)" src="custom imgs/arrow_btn_slap.png"
+                alt="btn_slap.png">
+            <div>
+                <img onmousedown="normalBubble(true,event)" onmouseup="normalBubble(false,event)"
+                    onmouseout="normalBubble(false,event)" ontouchstart="normalBubble(true,event)"
+                    ontouchend="normalBubble(false,event)" src="custom imgs/arrow_btn_bubble.png" alt="btn_bubble.png">
+                <img onmousedown="poisonBubble(true,event)" onmouseup="poisonBubble(false,event)"
+                    onmouseout="poisonBubble(false,event)" ontouchstart="poisonBubble(true,event)"
+                    ontouchend="poisonBubble(false,event)" src="custom imgs/arrow_btn_poison_bubble.png"
+                    alt="btn_poison.png">
+            </div>
+        </div>
         <canvas id="canvas" width="720" height="480"></canvas>
 
         <img id="tryagain-btn" onclick="restartGame()" class="tryagain-btn d-none"
